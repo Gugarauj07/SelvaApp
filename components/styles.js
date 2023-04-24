@@ -3,14 +3,14 @@ import { View, Text, Image, TextInput, TouchableOpacity } from "react-native";
 import Constants from "expo-constants";
 
 const StatusBarHeight = Constants.statusBarHeight;
-
+// #EAB204 - amarelo #003625 - verde #3C3C3B - cinza
 export const Colors = {
     primary: "#fff",
     secondary: "#E5E7EB",
     tertiary: "#1F2937",
     darkLight: "#9CA3AF",
-    brand: "#6D28D9",
-    green: "#10B981",
+    brand: "#003625",
+    green: "#EAB204",
     red: "#EF4444",
 };
 
