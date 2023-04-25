@@ -24,6 +24,7 @@ import {
 import { View } from 'react-native'
 import { Octicons, Ionicons, Fontisto } from '@expo/vector-icons'
 import { Formik } from 'formik'
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 const {brand, darkLight, primary} = Colors;
 import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper'
@@ -31,6 +32,20 @@ import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper'
 const Signup = ({navigation}) => {
 
     const [hidePassword, setHidePassword] =useState(true);
+    const registerFirebase = (email, password) => {
+        const auth = getAuth();
+        createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+            console.log(user);
+            // ...
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+        });
+    }
 
   return (
     <KeyboardAvoidingWrapper><StyledContainer>
@@ -41,10 +56,7 @@ const Signup = ({navigation}) => {
 
             <Formik
             initialValues={{fullName:"", email: '', dateOfBirth:"", password: '', confirmPassword: ''}}
-            onSubmit={(values) => {
-                console.log(values);
-                navigation.navigate("Login");
-            }}>
+            onSubmit={registerFirebase}>
                 {({handleChange, handleBlur, handleSubmit, values}) => 
                     (<StyledFormArea>
                         <MyTextInput 

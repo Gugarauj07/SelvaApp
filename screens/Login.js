@@ -24,6 +24,8 @@ import {
 import { View } from 'react-native'
 import { Octicons, Ionicons, Fontisto } from '@expo/vector-icons'
 import { Formik } from 'formik'
+import firebase from '../config/firebase'
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 const {brand, darkLight, primary} = Colors;
 
@@ -34,6 +36,30 @@ import axios from 'axios';
 const Login = ({navigation}) => {
 
     const [hidePassword, setHidePassword] =useState(true);
+    const [message, setMessage] =useState();
+    const [messageType, setMessageType] =useState();
+
+    const handleMessage = (message, type) => {
+        setMessage(message);
+        setMessageType(type);
+    }
+    
+    const loginFirebase = (values) => {
+        const auth = getAuth();
+        signInWithEmailAndPassword(auth, values.email, values.email)
+        .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+            console.log(user);
+            handleMessage("Successfully signed in");
+            // ...
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            handleMessage(errorMessage);
+        });
+    }
 
   return (
     <KeyboardAvoidingWrapper><StyledContainer>
@@ -45,11 +71,8 @@ const Login = ({navigation}) => {
 
             <Formik
             initialValues={{email: '', password: ''}}
-            onSubmit={(values) => {
-                console.log(values);
-                navigation.navigate("Home");
-            }}>
-                {({handleChange, handleBlur, handleSubmit, values}) => 
+            onSubmit={loginFirebase}>
+                {({handleChange, handleBlur, handleSubmit, values, errors}) => 
                     (<StyledFormArea>
                         <MyTextInput 
                             label="Endereço de Email"
@@ -74,9 +97,7 @@ const Login = ({navigation}) => {
                             hidePassword={hidePassword}
                             setHidePassword = {setHidePassword}
                         />
-                        <MsgBox>
-                            ...
-                        </MsgBox>
+                        <MsgBox type={messageType}>{message}</MsgBox>
                         <StyledButton onPress={handleSubmit}>
                             <ButtonText>Login</ButtonText>
                         </StyledButton>
