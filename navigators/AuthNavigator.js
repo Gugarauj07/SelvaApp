@@ -14,15 +14,15 @@ const RootStack = () => {
         <NavigationContainer>
             <Stack.Navigator
                 screenOptions={{
-                    // headerStyled: {
-                    //     backgroundColor: 'transparent',
-                    // },
-                    // headerTintColor: tertiary,
-                    // headerTransparent: true,
-                    // headerTitle: "",
-                    // headerLeftContainerStyle: {
-                    //     paddingLeft: 20
-                    // }
+                    headerStyled: {
+                        backgroundColor: 'transparent',
+                    },
+                    headerTintColor: tertiary,
+                    headerTransparent: true,
+                    headerTitle: "",
+                    headerLeftContainerStyle: {
+                        paddingLeft: 20
+                    }
                 }}
                 initialRouteName='Login'
             >

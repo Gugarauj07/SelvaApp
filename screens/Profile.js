@@ -3,7 +3,9 @@ import { View } from 'react-native';
 import { MultipleSelectList, SelectList } from 'react-native-dropdown-select-list'
 import {
     Colors,
-    StyledInputLabel
+    StyledInputLabel,
+    StyledButton,
+    ButtonText
 } from "./../components/styles"
 
 const {brand, secondary, gray} = Colors;
@@ -38,6 +40,10 @@ const Profile = () => {
                 boxStyles={{backgroundColor: secondary}}
                 searchPlaceholder = "Procurar"
             />
+
+            <StyledButton >
+                <ButtonText>Salvar</ButtonText>
+            </StyledButton>
     </View>
   )
 }
