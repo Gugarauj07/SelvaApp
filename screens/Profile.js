@@ -24,7 +24,7 @@ const Profile = () => {
     ]
 
   return (
-    <View style={{flex:1, paddingHorizontal:20, paddingTop:50}}>
+    <View>
         <StyledInputLabel>Onde quer monitorar?</StyledInputLabel>
             <MultipleSelectList 
                 setSelected={(val) => setSelected(val)} 
