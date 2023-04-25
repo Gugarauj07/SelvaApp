@@ -2,9 +2,10 @@ import React from 'react'
 import { Text } from 'react-native'
 
 
-const Home = ({navigation}) => {
+const Home = ({navigation, route }) => {
+    const {email, name} = route.params;
   return (
-    <Text></Text>
+    <Text>{email}</Text>
   )
 }
 

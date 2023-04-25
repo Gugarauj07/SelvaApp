@@ -10,11 +10,12 @@ export const Colors = {
     tertiary: "#1F2937",
     darkLight: "#9CA3AF",
     brand: "#003625",
-    green: "#EAB204",
+    yellow: "#EAB204",
+    green: "#86B049",
     red: "#EF4444",
 };
 
-const { primary, secondary, tertiary, darkLight, brand, green, red } = Colors;
+const { primary, secondary, tertiary, darkLight, brand, yellow, green, red } = Colors;
 
 export const StyledContainer = styled.View`
     flex: 1;
@@ -97,7 +98,7 @@ export const StyledButton = styled.TouchableOpacity`
     height:60px;
 
     ${(props) => props.google == true && `
-    background-color: ${green};
+    background-color: ${yellow};
     flex-direction:row;
     justify-content: center;
     `}

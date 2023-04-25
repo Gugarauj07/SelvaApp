@@ -1,11 +1,10 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import { StatusBar } from 'expo-status-bar'
 import {
     Colors,
     StyledContainer,
     InnerContainer,
     PageLogo, 
-    PageTitle,
     SubTitle,
     StyledFormArea,
     LeftIcon,
@@ -21,17 +20,14 @@ import {
     TextLink,
     TextLinkContent
 } from "./../components/styles"
-import { View } from 'react-native'
+import { View, ActivityIndicator } from 'react-native'
 import { Octicons, Ionicons, Fontisto } from '@expo/vector-icons'
 import { Formik } from 'formik'
-import firebase from '../config/firebase'
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged  } from "firebase/auth";
 
 const {brand, darkLight, primary} = Colors;
 
 import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
-
-import axios from 'axios';
 
 const Login = ({navigation}) => {
 
@@ -39,27 +35,46 @@ const Login = ({navigation}) => {
     const [message, setMessage] =useState();
     const [messageType, setMessageType] =useState();
 
-    const handleMessage = (message, type) => {
+    const handleMessage = (message, type = "FAILED") => {
         setMessage(message);
         setMessageType(type);
     }
     
-    const loginFirebase = (values) => {
-        const auth = getAuth();
-        signInWithEmailAndPassword(auth, values.email, values.email)
-        .then((userCredential) => {
-            // Signed in
-            const user = userCredential.user;
-            console.log(user);
-            handleMessage("Successfully signed in");
-            // ...
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            handleMessage(errorMessage);
-        });
+    const loginFirebase = (values, {setSubmitting}) => {
+        handleMessage(null);
+        if (values.email == '' || values.password == '') {
+            handleMessage("Preencha todos os campos!")
+            setSubmitting(false);
+        } else {
+            const auth = getAuth();
+            signInWithEmailAndPassword(auth, values.email, values.password)
+            .then((userCredential) => {
+                // Signed in
+                const user = userCredential.user;
+                console.log(user);
+                setSubmitting(false);
+                handleMessage("Successfully signed in", 'SUCCESS');
+                navigation.navigate("Home", {idUser: user.uid});
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorMessage);
+                handleMessage(errorMessage);
+                setSubmitting(false);
+            });
+            
+        }
     }
+
+    useEffect(() => {
+        const auth = getAuth();
+        onAuthStateChanged(auth, (user) => {
+        if (user) {
+            navigation.navigate("Home", {idUser: user.uid});
+        } 
+        });
+    }, []);
 
   return (
     <KeyboardAvoidingWrapper><StyledContainer>
@@ -72,7 +87,7 @@ const Login = ({navigation}) => {
             <Formik
             initialValues={{email: '', password: ''}}
             onSubmit={loginFirebase}>
-                {({handleChange, handleBlur, handleSubmit, values, errors}) => 
+                {({handleChange, handleBlur, handleSubmit, values, isSubmitting}) => 
                     (<StyledFormArea>
                         <MyTextInput 
                             label="Endereço de Email"
@@ -98,9 +113,13 @@ const Login = ({navigation}) => {
                             setHidePassword = {setHidePassword}
                         />
                         <MsgBox type={messageType}>{message}</MsgBox>
-                        <StyledButton onPress={handleSubmit}>
+                        {!isSubmitting && <StyledButton onPress={handleSubmit}>
                             <ButtonText>Login</ButtonText>
-                        </StyledButton>
+                        </StyledButton>}
+
+                        {isSubmitting && <StyledButton disabled={true}>
+                            <ActivityIndicator size="large" color={primary} />
+                        </StyledButton>}
                         <Line />
                         <StyledButton google={true} onPress={handleSubmit}>
                             <Fontisto name='google' color={primary} size={25} />

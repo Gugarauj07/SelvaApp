@@ -4,8 +4,6 @@ import {
     Colors,
     StyledContainer,
     InnerContainer,
-    PageLogo, 
-    PageTitle,
     SubTitle,
     StyledFormArea,
     LeftIcon,
@@ -21,7 +19,7 @@ import {
     TextLink,
     TextLinkContent
 } from "./../components/styles"
-import { View } from 'react-native'
+import { View, ActivityIndicator } from 'react-native'
 import { Octicons, Ionicons, Fontisto } from '@expo/vector-icons'
 import { Formik } from 'formik'
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
@@ -32,19 +30,39 @@ import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper'
 const Signup = ({navigation}) => {
 
     const [hidePassword, setHidePassword] =useState(true);
-    const registerFirebase = (email, password) => {
-        const auth = getAuth();
-        createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            // Signed in
-            const user = userCredential.user;
-            console.log(user);
-            // ...
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-        });
+    const [message, setMessage] =useState();
+    const [messageType, setMessageType] =useState();
+
+    const handleMessage = (message, type = "FAILED") => {
+        setMessage(message);
+        setMessageType(type);
+    }
+
+    const registerFirebase = (values, {setSubmitting}) => {
+        handleMessage(null);
+        if (values.email == '' || values.password == ''|| values.confirmPassword == ''|| values.fullName == '') {
+            handleMessage("Preencha todos os campos!")
+            setSubmitting(false);
+        } else if (values.password !== values.confirmPassword) {
+            handleMessage("As senhas estão diferentes!")
+            setSubmitting(false);
+        } else {
+            const auth = getAuth();
+            createUserWithEmailAndPassword(auth, values.email, values.password)
+            .then((userCredential) => {
+                // Signed in
+                const user = userCredential.user;
+                handleMessage("Cadastrado com sucesso!", 'SUCCESS');
+                setSubmitting(false);
+                navigation.navigate("Login");
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                handleMessage(errorMessage);
+                setSubmitting(false);
+            });
+        }   
     }
 
   return (
@@ -57,7 +75,7 @@ const Signup = ({navigation}) => {
             <Formik
             initialValues={{fullName:"", email: '', dateOfBirth:"", password: '', confirmPassword: ''}}
             onSubmit={registerFirebase}>
-                {({handleChange, handleBlur, handleSubmit, values}) => 
+                {({handleChange, handleBlur, handleSubmit, values, isSubmitting}) => 
                     (<StyledFormArea>
                         <MyTextInput 
                             label="Nome completo"
@@ -113,12 +131,14 @@ const Signup = ({navigation}) => {
                             hidePassword={hidePassword}
                             setHidePassword = {setHidePassword}
                         />
-                        <MsgBox>
-                            ...
-                        </MsgBox>
-                        <StyledButton onPress={handleSubmit}>
+                        <MsgBox type={messageType}>{message}</MsgBox>
+                        {!isSubmitting && <StyledButton onPress={handleSubmit}>
                             <ButtonText>Registrar</ButtonText>
-                        </StyledButton>
+                        </StyledButton>}
+
+                        {isSubmitting && <StyledButton disabled={true}>
+                            <ActivityIndicator size="large" color={primary} />
+                        </StyledButton>}
                         <Line />
                         
                         <ExtraView>
