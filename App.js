@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-import RootStack from './navigators/RootStack';
+import AuthNavigator from './navigators/AuthNavigator';
 
 export default function App() {
-  return (<RootStack />);
+  return (<AuthNavigator />);
 }
 
 const styles = StyleSheet.create({
