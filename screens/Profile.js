@@ -6,7 +6,7 @@ import {
     StyledInputLabel
 } from "./../components/styles"
 
-const {brand, darkLight, primary} = Colors;
+const {brand, secondary, gray} = Colors;
 
 const Profile = () => {
 

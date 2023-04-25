@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Login from './../screens/Login';
 import Signup from './../screens/Signup';
 import Home from './../screens/Home';
+import DrawerNavigator from './DrawerNavigator';
 import { Colors } from '../components/styles';
 const {primary, tertiary} = Colors;
 const Stack = createStackNavigator();
@@ -28,7 +29,7 @@ const RootStack = () => {
         >
             <Stack.Screen name="Login" component={Login}/>
             <Stack.Screen name="Signup" component={Signup}/>
-            <Stack.Screen name="Home" component={Home} options={{headerLeft:null}}/>
+            <Stack.Screen name="Home" component={DrawerNavigator} options={{headerLeft:null}}/>
         </Stack.Navigator>
     </NavigationContainer>
   )

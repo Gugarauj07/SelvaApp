@@ -7,7 +7,6 @@ import {
 } from "./../components/styles"
 
 const Home = ({navigation, route }) => {
-    const {email, name} = route.params;
   return (
     <StyledContainer>
         <InnerContainer>
