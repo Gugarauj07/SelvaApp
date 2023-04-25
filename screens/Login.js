@@ -24,6 +24,8 @@ import { View, ActivityIndicator } from 'react-native'
 import { Octicons, Ionicons, Fontisto } from '@expo/vector-icons'
 import { Formik } from 'formik'
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged  } from "firebase/auth";
+import { app } from './../config/firebase';
+
 
 const {brand, darkLight, primary} = Colors;
 
@@ -68,13 +70,15 @@ const Login = ({navigation}) => {
     }
 
     useEffect(() => {
-        const auth = getAuth();
-        onAuthStateChanged(auth, (user) => {
-        if (user) {
-            navigation.navigate("Home", {idUser: user.uid});
-        } 
-        });
-    }, []);
+        if (app) {
+            const auth = getAuth();
+            onAuthStateChanged(auth, (user) => {
+            if (user) {
+                navigation.navigate("Home", {idUser: user.uid});
+            } 
+            });
+    }
+    }, [app]);
 
   return (
     <KeyboardAvoidingWrapper><StyledContainer>
