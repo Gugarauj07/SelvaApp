@@ -23,8 +23,9 @@ import { View, ActivityIndicator } from 'react-native'
 import { Octicons, Ionicons, Fontisto } from '@expo/vector-icons'
 import { Formik } from 'formik'
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { MultipleSelectList, SelectList } from 'react-native-dropdown-select-list'
 
-const {brand, darkLight, primary} = Colors;
+const {brand, darkLight, primary, yellow, gray, secondary} = Colors;
 import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper'
 
 const Signup = ({navigation}) => {
@@ -32,6 +33,17 @@ const Signup = ({navigation}) => {
     const [hidePassword, setHidePassword] =useState(true);
     const [message, setMessage] =useState();
     const [messageType, setMessageType] =useState();
+    const [selected, setSelected] = useState("");
+
+    const data = [
+        {key:'1', value:'Manaus'},
+        {key:'2', value:'Itacoatiara'},
+        {key:'3', value:'Manacapuru'},
+        {key:'4', value:'Jutaí'},
+        {key:'5', value:'Arapuanã'},
+        {key:'6', value:'Maués'},
+        {key:'7', value:'Autazes'},
+    ]
 
     const handleMessage = (message, type = "FAILED") => {
         setMessage(message);
@@ -73,7 +85,7 @@ const Signup = ({navigation}) => {
             <SubTitle>Registro de Usuário</SubTitle>
 
             <Formik
-            initialValues={{fullName:"", email: '', dateOfBirth:"", password: '', confirmPassword: ''}}
+            initialValues={{fullName:"", email: '', citys:"", password: '', confirmPassword: ''}}
             onSubmit={registerFirebase}>
                 {({handleChange, handleBlur, handleSubmit, values, isSubmitting}) => 
                     (<StyledFormArea>
@@ -96,14 +108,17 @@ const Signup = ({navigation}) => {
                             value={values.email}
                             keyboardType="email-address"
                         />
-                        <MyTextInput 
-                            label="Data de nascimento"
-                            icon="calendar"
-                            placeholder="DD-MM-YYYY"
-                            placeHolderTextColor={darkLight}
-                            onChangeText={handleChange("dateOfBirth")}
-                            onBlur={handleBlur("dateOfBirth")}
-                            value={values.dateOfBirth}
+                        <StyledInputLabel>Onde quer monitorar?</StyledInputLabel>
+                        <MultipleSelectList 
+                            setSelected={(val) => setSelected(val)} 
+                            data={data} 
+                            label="Localidades selecionadas"
+                            save="value"
+                            onSelect={()=> console.log(selected)}
+                            fontFamily=''
+                            notFoundText='Localidade não cadastrada no sistema.'
+                            badgeStyles={{backgroundColor: gray}}
+                            boxStyles={{backgroundColor: secondary}}
                         />
                         <MyTextInput 
                             label="Senha"
