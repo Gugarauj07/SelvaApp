@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import { StatusBar } from 'expo-status-bar'
+
 import {
     Colors,
     StyledContainer,
@@ -23,11 +24,12 @@ import {
 import { View, ActivityIndicator } from 'react-native'
 import { Octicons, Ionicons, Fontisto } from '@expo/vector-icons'
 import { Formik } from 'formik'
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged  } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { app } from './../config/firebase';
 
 
 const {brand, darkLight, primary} = Colors;
+
 
 import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
 
@@ -68,6 +70,32 @@ const Login = ({navigation}) => {
             
         }
     }
+
+    // const handleGoogleSignin = async () => {
+    //     const auth = getAuth();
+    //     signInWithRedirect(auth, provider);
+    //     getRedirectResult(auth)
+    //     .then((result) => {
+    //         // This gives you a Google Access Token. You can use it to access Google APIs.
+    //         const credential = GoogleAuthProvider.credentialFromResult(result);
+    //         const token = credential.accessToken;
+
+    //         // The signed-in user info.
+    //         const user = result.user;
+    //         // IdP data available using getAdditionalUserInfo(result)
+    //         // ...
+    //     }).catch((error) => {
+    //         // Handle Errors here.
+    //         const errorCode = error.code;
+    //         const errorMessage = error.message;
+    //         // The email of the user's account used.
+    //         const email = error.customData.email;
+    //         // The AuthCredential type that was used.
+    //         const credential = GoogleAuthProvider.credentialFromError(error);
+    //         // ...
+    //     });
+
+    // }
 
     useEffect(() => {
         if (app) {
@@ -124,23 +152,25 @@ const Login = ({navigation}) => {
                         {isSubmitting && <StyledButton disabled={true}>
                             <ActivityIndicator size="large" color={primary} />
                         </StyledButton>}
-                        <Line />
-                        <StyledButton google={true} onPress={handleSubmit}>
-                            <Fontisto name='google' color={primary} size={25} />
-                            <ButtonText google={true}>Entre com o Google</ButtonText>
-                        </StyledButton>
-                        <ExtraView>
-                            <ExtraText>
-                                Ainda não tem uma conta?
-                            </ExtraText>
-                            <TextLink onPress={() => navigation.navigate("Signup")}>
-                                <TextLinkContent>  Registre-se</TextLinkContent>
-                            </TextLink>
-                        </ExtraView>
                     </StyledFormArea>)
                 }
 
             </Formik>
+            <StyledFormArea>
+                <Line />
+                <StyledButton google={true} >
+                    <Fontisto name='google' color={primary} size={25} />
+                    <ButtonText google={true}>Entre com o Google</ButtonText>
+                </StyledButton>
+                <ExtraView>
+                    <ExtraText>
+                        Ainda não tem uma conta?
+                    </ExtraText>
+                    <TextLink onPress={() => navigation.navigate("Signup")}>
+                        <TextLinkContent>  Registre-se</TextLinkContent>
+                    </TextLink>
+                </ExtraView>
+            </StyledFormArea>
         </InnerContainer>
     </StyledContainer></KeyboardAvoidingWrapper>
   )
