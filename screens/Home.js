@@ -15,15 +15,25 @@ const LONGITUDE = -83.75819;
 const LATITUDE_DELTA = 50;
 const LONGITUDE_DELTA = LATITUDE_DELTA * (width / height);
 
+import moment from 'moment';
+
+// const currentDate = moment().format('YYYY-MM-DD');
+// import 'moment-timezone';
+// console.log(currentDate); // saída: 2023-04-27
 
 
 const Home = ({navigation, route }) => {
 
   const [dataPoints, setdataPoints] = useState();
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth() + 1 < 10 ? '0' + (now.getMonth() + 1) : now.getMonth() + 1;
+  const day = now.getDate() < 10 ? '0' + now.getDate() : now.getDate();
+  const formattedDate = `${year}-${month}-${day}`;
 
   useEffect(() => {
     axios
-    .get("https://firms.modaps.eosdis.nasa.gov/api/area/csv/371a0d0aef0424e422b707280cda69a4/MODIS_NRT/-85,-57,-32,14/1/2023-04-26")
+    .get("https://firms.modaps.eosdis.nasa.gov/api/area/csv/371a0d0aef0424e422b707280cda69a4/MODIS_NRT/-85,-57,-32,14/1/"+formattedDate)
     .then((response) => {
         const rows = response.data.split('\n').slice(1);
         const latLngs = rows.map(row => {
@@ -34,9 +44,8 @@ const Home = ({navigation, route }) => {
           return { latitude, longitude, weight };
         });
         setdataPoints(latLngs)
-        console.log(latLngs);
     });
-  }, []);
+  }, [formattedDate]);
 
   return (
     <View style={styles.container}>
@@ -54,15 +63,17 @@ const Home = ({navigation, route }) => {
           {dataPoints &&
           <Heatmap points={dataPoints}
                           opacity={1}
-                          radius={50}
-                          maxIntensity={1}
-                          // gradient={[
-                          //   { color: '#FFFF00', value: 0.1 },
-                          //   { color: '#FF8C00', value: 0.5 },
-                          //   { color: '#FF0000', value: 1 }
-                          // ]}
-                          gradientSmoothing={10}
-                          heatmapMode={"POINTS_DENSITY"}/>}
+                          radius={10}
+                          maxIntensity={100}
+                          gradient={{
+                            colors:['#FF8C00','#FF0000'],
+                            startPoints: [0.1, 1]}}
+                            // { color: '#FFFF00', value: 0.1 },
+                            // { color: '#FF8C00', value: 0.5 },
+                            // { color: '#FF0000', value: 1 }
+                          
+                          
+                          heatmapMode={"POINTS_DENSITY"}/> }
       </MapView>
     </View>
   )
