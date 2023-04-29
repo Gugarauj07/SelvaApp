@@ -33,7 +33,7 @@ const Home = ({navigation, route }) => {
 
   useEffect(() => {
     axios
-    .get("https://firms.modaps.eosdis.nasa.gov/api/area/csv/371a0d0aef0424e422b707280cda69a4/MODIS_NRT/-74,-26,-32,05/1/2023-04-27")
+    .get("https://firms.modaps.eosdis.nasa.gov/api/area/csv/371a0d0aef0424e422b707280cda69a4/MODIS_NRT/-74,-26,-32,05/1/" +formattedDate)
     .then((response) => {
         const rows = response.data.split('\n').slice(1);
         const latLngs = rows.map(row => {
