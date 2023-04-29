@@ -51,6 +51,7 @@ const Login = ({navigation}) => {
             setSubmitting(false);
         } else {
             const auth = getAuth();
+            auth.languageCode = 'pt';
             signInWithEmailAndPassword(auth, values.email, values.password)
             .then((userCredential) => {
                 // Signed in
@@ -100,12 +101,13 @@ const Login = ({navigation}) => {
     useEffect(() => {
         if (app) {
             const auth = getAuth();
+            auth.useDeviceLanguage();
             onAuthStateChanged(auth, (user) => {
             if (user) {
                 navigation.navigate("Home", {idUser: user.uid});
             } 
             });
-    }
+        }
     }, [app]);
 
   return (
