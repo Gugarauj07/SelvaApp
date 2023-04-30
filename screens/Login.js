@@ -73,14 +73,15 @@ const Login = ({navigation}) => {
         }
     }
 
-    const handleForgotPassword = (values, {setSubmitting}) => {
+    const handleForgotPassword = (email) => {
         handleMessage(null);
-        if (values.email == '') {
+        console.log(email);
+        if (email == '') {
             handleMessage("Preencha o campo de email para enviarmos o link!");
         } else {
-            console.log(values.email);
+            console.log(email);
         const auth = getAuth();
-        sendPasswordResetEmail(auth, values.email)
+        sendPasswordResetEmail(auth, email)
             .then(() => {
                 handleMessage("Enviamos um e-mail para você!", "SUCCESS");
             })
@@ -171,7 +172,7 @@ const Login = ({navigation}) => {
                             <ExtraText>
                             Esqueceu sua senha?
                             </ExtraText>
-                            <TextLink onPress={handleForgotPassword}>
+                            <TextLink onPress={() => {handleForgotPassword(values.email)}}>
                                     <TextLinkContent> Clique aqui</TextLinkContent>
                             </TextLink>
                         </ExtraView>
