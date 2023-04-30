@@ -1,5 +1,4 @@
 import React from 'react'
-import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Login from '../screens/Login';
@@ -11,7 +10,6 @@ const Stack = createStackNavigator();
 
 const RootStack = () => {
     return (
-        <NavigationContainer>
             <Stack.Navigator
                 screenOptions={{
                     headerStyled: {
@@ -30,7 +28,6 @@ const RootStack = () => {
                 <Stack.Screen name="Signup" component={Signup} />
                 <Stack.Screen name="Home" component={DrawerNavigator} options={{headerShown: false}}/>
             </Stack.Navigator>
-        </NavigationContainer>
     )
 }
 

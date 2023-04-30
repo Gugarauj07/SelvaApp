@@ -13,6 +13,7 @@ import {
   DrawerItemList,
 } from '@react-navigation/drawer';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { getAuth, signOut } from "firebase/auth";
 
 import { Colors } from '../components/styles';
 const {primary, brand} = Colors;
@@ -20,6 +21,16 @@ const {primary, brand} = Colors;
 const {width} = Dimensions.get('screen');
 
 const CustomDrawer = props => {
+
+  const handleSignOut = () => {
+    const auth = getAuth();
+    signOut(auth).then(() => {
+      console.log("signed out");
+      }).catch((error) => {
+      // An error happened.
+    });
+}
+
   return (
     <View style={{flex: 1}}>
       <DrawerContentScrollView {...props}>
@@ -28,7 +39,7 @@ const CustomDrawer = props => {
         </View>
       </DrawerContentScrollView>
       <View style={{padding: 20, borderTopWidth: 1, borderTopColor: '#ccc'}}>
-        <TouchableOpacity onPress={() => {}} style={{paddingVertical: 15}}>
+        <TouchableOpacity onPress={handleSignOut} style={{paddingVertical: 15}}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Ionicons name="exit-outline" size={18} />
             <Text

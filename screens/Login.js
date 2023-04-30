@@ -24,7 +24,7 @@ import {
 import { View, ActivityIndicator, TouchableOpacity, Text } from 'react-native'
 import { Octicons, Ionicons, Fontisto } from '@expo/vector-icons'
 import { Formik } from 'formik'
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, signOut, sendPasswordResetEmail } from "firebase/auth";
 import { app } from './../config/firebase';
 
 
@@ -73,6 +73,7 @@ const Login = ({navigation}) => {
         }
     }
 
+
     const handleForgotPassword = (email) => {
         handleMessage(null);
         console.log(email);
@@ -117,17 +118,6 @@ const Login = ({navigation}) => {
     //     });
 
     // }
-
-    useEffect(() => {
-        if (app) {
-            const auth = getAuth();
-            onAuthStateChanged(auth, (user) => {
-            if (user) {
-                navigation.navigate("Home", {idUser: user.uid});
-            } 
-            });
-        }
-    }, [app]);
 
   return (
     <KeyboardAvoidingWrapper><StyledContainer>
