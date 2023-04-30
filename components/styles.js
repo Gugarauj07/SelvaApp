@@ -13,10 +13,11 @@ export const Colors = {
     yellow: "#EAB204",
     green: "#86B049",
     red: "#EF4444",
-    gray: "#3C3C3B"
+    gray: "#3C3C3B",
+    ligthblue: "#03a9f4"
 };
 
-const { primary, secondary, tertiary, darkLight, brand, yellow, green, red } = Colors;
+const { primary, secondary, tertiary, darkLight, brand, yellow, green, red, ligthblue } = Colors;
 
 export const StyledContainer = styled.View`
     flex: 1;
@@ -34,6 +35,7 @@ export const InnerContainer = styled.View`
 export const PageLogo = styled.Image`
     width: 250px;
     height: 210px;
+    padding: 0px;
 `;
 
 export const PageTitle = styled.Text`
@@ -46,7 +48,7 @@ export const PageTitle = styled.Text`
 
 export const SubTitle = styled.Text`
     font-size: 18px;
-    margin: 20px;
+    margin: 11px;
     letter-spacing: 1px;
     font-weight: bold;
     color: ${tertiary};
@@ -131,7 +133,8 @@ export const ExtraView = styled.View`
     justify-content: center;
     flex-direction: row;
     align-items: center;
-    padding: 10px;
+    padding: 4px;
+    padding-bottom: 0px;
 `;
 
 export const ExtraText = styled.Text`
@@ -147,7 +150,7 @@ export const TextLink = styled.TouchableOpacity`
 `;
 
 export const TextLinkContent = styled.Text`
-    color: ${brand};
+    color: ${ligthblue};
     font-size: 15px;
 `;
 

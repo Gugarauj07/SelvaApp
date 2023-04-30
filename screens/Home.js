@@ -15,8 +15,7 @@ const LONGITUDE = -83.75819;
 const LATITUDE_DELTA = 50;
 const LONGITUDE_DELTA = LATITUDE_DELTA * (width / height);
 
-import moment from 'moment';
-
+import moment from 'moment-timezone';
 // const currentDate = moment().format('YYYY-MM-DD');
 // import 'moment-timezone';
 // console.log(currentDate); // saída: 2023-04-27
@@ -25,11 +24,14 @@ import moment from 'moment';
 const Home = ({navigation, route }) => {
 
   const [dataPoints, setdataPoints] = useState();
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = now.getMonth() + 1 < 10 ? '0' + (now.getMonth() + 1) : now.getMonth() + 1;
-  const day = now.getDate() < 10 ? '0' + now.getDate() : now.getDate();
+  
+
+  const now = moment().tz('America/Manaus');
+  const year = now.format('YYYY');
+  const month = now.format('MM');
+  const day = now.format('DD');
   const formattedDate = `${year}-${month}-${day}`;
+  console.log(formattedDate);
 
   useEffect(() => {
     axios

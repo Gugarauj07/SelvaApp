@@ -5,11 +5,15 @@ import {
   Image,
   View,
   Dimensions,
+  TouchableOpacity,
+  Text
 } from 'react-native';
 import {
   DrawerContentScrollView,
   DrawerItemList,
 } from '@react-navigation/drawer';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 import { Colors } from '../components/styles';
 const {primary, brand} = Colors;
 
@@ -17,11 +21,28 @@ const {width} = Dimensions.get('screen');
 
 const CustomDrawer = props => {
   return (
-    <DrawerContentScrollView {...props}>
-      <View style={styles.drawerListWrapper}>
-        <DrawerItemList {...props} />
+    <View style={{flex: 1}}>
+      <DrawerContentScrollView {...props}>
+        <View style={styles.drawerListWrapper}>
+          <DrawerItemList {...props} />
+        </View>
+      </DrawerContentScrollView>
+      <View style={{padding: 20, borderTopWidth: 1, borderTopColor: '#ccc'}}>
+        <TouchableOpacity onPress={() => {}} style={{paddingVertical: 15}}>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Ionicons name="exit-outline" size={18} />
+            <Text
+              style={{
+                fontSize: 15,
+                marginLeft: 5,
+              }}>
+              Sign Out
+            </Text>
+          </View>
+        </TouchableOpacity>
       </View>
-    </DrawerContentScrollView>
+    </View>
+
   );
 };
 

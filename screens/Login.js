@@ -19,12 +19,12 @@ import {
     ExtraText,
     ExtraView,
     TextLink,
-    TextLinkContent
+    TextLinkContent,
 } from "./../components/styles"
-import { View, ActivityIndicator } from 'react-native'
+import { View, ActivityIndicator, TouchableOpacity, Text } from 'react-native'
 import { Octicons, Ionicons, Fontisto } from '@expo/vector-icons'
 import { Formik } from 'formik'
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail } from "firebase/auth";
 import { app } from './../config/firebase';
 
 
@@ -60,6 +60,7 @@ const Login = ({navigation}) => {
                 setSubmitting(false);
                 handleMessage("Successfully signed in", 'SUCCESS');
                 navigation.navigate("Home", {idUser: user.uid});
+                handleMessage(null);
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -69,6 +70,24 @@ const Login = ({navigation}) => {
                 setSubmitting(false);
             });
             
+        }
+    }
+
+    const handleForgotPassword = (values, {setSubmitting}) => {
+        handleMessage(null);
+        if (values.email == '') {
+            handleMessage("Preencha o campo de email para enviarmos o link!");
+        } else {
+            console.log(values.email);
+        const auth = getAuth();
+        sendPasswordResetEmail(auth, values.email)
+            .then(() => {
+                handleMessage("Enviamos um e-mail para você!", "SUCCESS");
+            })
+            .catch((error) => {
+                console.log(error);
+                handleMessage(error.message)
+            });
         }
     }
 
@@ -101,7 +120,6 @@ const Login = ({navigation}) => {
     useEffect(() => {
         if (app) {
             const auth = getAuth();
-            auth.useDeviceLanguage();
             onAuthStateChanged(auth, (user) => {
             if (user) {
                 navigation.navigate("Home", {idUser: user.uid});
@@ -146,7 +164,18 @@ const Login = ({navigation}) => {
                             hidePassword={hidePassword}
                             setHidePassword = {setHidePassword}
                         />
+
                         <MsgBox type={messageType}>{message}</MsgBox>
+
+                        <ExtraView>
+                            <ExtraText>
+                            Esqueceu sua senha?
+                            </ExtraText>
+                            <TextLink onPress={handleForgotPassword}>
+                                    <TextLinkContent> Clique aqui</TextLinkContent>
+                            </TextLink>
+                        </ExtraView>
+
                         {!isSubmitting && <StyledButton onPress={handleSubmit}>
                             <ButtonText>Login</ButtonText>
                         </StyledButton>}
@@ -154,6 +183,7 @@ const Login = ({navigation}) => {
                         {isSubmitting && <StyledButton disabled={true}>
                             <ActivityIndicator size="large" color={primary} />
                         </StyledButton>}
+                        
                     </StyledFormArea>)
                 }
 
@@ -164,6 +194,7 @@ const Login = ({navigation}) => {
                     <Fontisto name='google' color={primary} size={25} />
                     <ButtonText google={true}>Entre com o Google</ButtonText>
                 </StyledButton>
+            
                 <ExtraView>
                     <ExtraText>
                         Ainda não tem uma conta?
@@ -172,6 +203,7 @@ const Login = ({navigation}) => {
                         <TextLinkContent>  Registre-se</TextLinkContent>
                     </TextLink>
                 </ExtraView>
+                
             </StyledFormArea>
         </InnerContainer>
     </StyledContainer></KeyboardAvoidingWrapper>
