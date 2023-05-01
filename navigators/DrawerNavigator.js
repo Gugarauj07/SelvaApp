@@ -5,12 +5,14 @@ import About from './../screens/About';
 import { Colors } from '../components/styles';
 import CustomDrawer  from '../components/CustomDrawer';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { useRoute } from '@react-navigation/native';
 
 const {primary, brand} = Colors;
 
 const Drawer = createDrawerNavigator();
 
-function DrawerNavigator() {
+const  DrawerNavigator = () => {
+  
     return (
         <Drawer.Navigator 
             drawerContent={props => <CustomDrawer {...props} />}

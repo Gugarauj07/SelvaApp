@@ -19,6 +19,7 @@ import {
     TextLink,
     TextLinkContent
 } from "./../components/styles"
+import {cidades} from "./../components/Constants"
 import { View, ActivityIndicator } from 'react-native'
 import { Octicons, Ionicons, Fontisto } from '@expo/vector-icons'
 import { Formik } from 'formik'
@@ -35,15 +36,7 @@ const Signup = ({navigation}) => {
     const [messageType, setMessageType] =useState();
     const [selected, setSelected] = useState("");
 
-    const data = [
-        {key:'1', value:'Manaus'},
-        {key:'2', value:'Itacoatiara'},
-        {key:'3', value:'Manacapuru'},
-        {key:'4', value:'Jutaí'},
-        {key:'5', value:'Arapuanã'},
-        {key:'6', value:'Maués'},
-        {key:'7', value:'Autazes'},
-    ]
+
 
     const handleMessage = (message, type = "FAILED") => {
         setMessage(message);
@@ -111,7 +104,7 @@ const Signup = ({navigation}) => {
                         <StyledInputLabel>Onde quer monitorar?</StyledInputLabel>
                         <MultipleSelectList 
                             setSelected={(val) => setSelected(val)} 
-                            data={data} 
+                            data={cidades} 
                             label="Localidades selecionadas"
                             save="value"
                             onSelect={()=> console.log(selected)}

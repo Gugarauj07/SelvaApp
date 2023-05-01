@@ -5,8 +5,11 @@ import Login from '../screens/Login';
 import Signup from '../screens/Signup';
 import DrawerNavigator from './DrawerNavigator';
 import { Colors } from '../components/styles';
+
+
 const { primary, tertiary } = Colors;
 const Stack = createStackNavigator();
+
 
 const RootStack = () => {
     return (
@@ -24,9 +27,10 @@ const RootStack = () => {
                 }}
                 initialRouteName='Login'
             >
-                <Stack.Screen name="Login" component={Login} />
-                <Stack.Screen name="Signup" component={Signup} />
-                <Stack.Screen name="Home" component={DrawerNavigator} options={{headerShown: false}}/>
+                    <Stack.Screen name="Login" component={Login} />
+                    <Stack.Screen name="Signup" component={Signup} />
+                    <Stack.Screen name="Home" component={DrawerNavigator} options={{headerShown: false}}/>
+               
             </Stack.Navigator>
     )
 }

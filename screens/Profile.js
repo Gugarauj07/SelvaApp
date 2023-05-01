@@ -1,5 +1,5 @@
-import React, {useState} from 'react'
-import { View } from 'react-native';
+import React, {useState, useContext} from 'react'
+import { View, Text } from 'react-native';
 import { MultipleSelectList, SelectList } from 'react-native-dropdown-select-list'
 import {
     Colors,
@@ -7,30 +7,25 @@ import {
     StyledButton,
     ButtonText
 } from "./../components/styles"
+import {cidades} from "./../components/Constants"
+import { UserContext } from '../components/UserProvider'; 
 
 const {brand, secondary, gray} = Colors;
 
 const Profile = () => {
 
+    const {user} = useContext(UserContext)
+
     const [selected, setSelected] = useState("");
-
-
-    const data = [
-        {key:'1', value:'Manaus'},
-        {key:'2', value:'Itacoatiara'},
-        {key:'3', value:'Manacapuru'},
-        {key:'4', value:'Jutaí'},
-        {key:'5', value:'Arapuanã'},
-        {key:'6', value:'Maués'},
-        {key:'7', value:'Autazes'},
-    ]
+    
 
   return (
     <View>
+        <Text>Usuário: {user}</Text>
         <StyledInputLabel>Onde quer monitorar?</StyledInputLabel>
             <MultipleSelectList 
                 setSelected={(val) => setSelected(val)} 
-                data={data} 
+                data={cidades} 
                 label="Localidades selecionadas"
                 save="value"
                 onSelect={()=> console.log(selected)}

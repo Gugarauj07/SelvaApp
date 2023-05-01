@@ -24,7 +24,7 @@ import {
 import { View, ActivityIndicator, TouchableOpacity, Text } from 'react-native'
 import { Octicons, Ionicons, Fontisto } from '@expo/vector-icons'
 import { Formik } from 'formik'
-import { getAuth, signInWithEmailAndPassword, signOut, sendPasswordResetEmail } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 import { app } from './../config/firebase';
 
 
@@ -56,10 +56,9 @@ const Login = ({navigation}) => {
             .then((userCredential) => {
                 // Signed in
                 const user = userCredential.user;
-                console.log(user);
                 setSubmitting(false);
                 handleMessage("Successfully signed in", 'SUCCESS');
-                navigation.navigate("Home", {idUser: user.uid});
+                navigation.navigate("Home");
                 handleMessage(null);
             })
             .catch((error) => {
