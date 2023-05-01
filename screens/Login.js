@@ -25,7 +25,6 @@ import { View, ActivityIndicator, TouchableOpacity, Text } from 'react-native'
 import { Octicons, Ionicons, Fontisto } from '@expo/vector-icons'
 import { Formik } from 'formik'
 import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
-import { app } from './../config/firebase';
 
 
 const {brand, darkLight, primary} = Colors;

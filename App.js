@@ -1,19 +1,26 @@
-import { StyleSheet } from 'react-native';
 import { useState, useEffect } from 'react';
 import AuthNavigator from './navigators/AuthNavigator';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import DrawerNavigator from './navigators/DrawerNavigator';
 import { NavigationContainer } from '@react-navigation/native';
 import UserProvider from './components/UserProvider';
+import {app} from './config/firebase'
 
 export default function App() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const auth = getAuth();
-    const subscriber = onAuthStateChanged(auth, setUser);
-
-    return subscriber;
+    if (app) {
+      const auth = getAuth();
+      const subscriber = onAuthStateChanged(auth, (user) => {
+        if (user) {
+          setUser(user);
+        } else {
+          setUser(null);
+        }
+      });
+  }
+    return () => subscriber();
   }, []);
 
   return (
@@ -26,12 +33,3 @@ export default function App() {
     </NavigationContainer>
     );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

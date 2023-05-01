@@ -23,7 +23,8 @@ import {cidades} from "./../components/Constants"
 import { View, ActivityIndicator } from 'react-native'
 import { Octicons, Ionicons, Fontisto } from '@expo/vector-icons'
 import { Formik } from 'formik'
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signOut } from "firebase/auth";
+import firestore from 'firebase/firestore';
 import { MultipleSelectList, SelectList } from 'react-native-dropdown-select-list'
 
 const {brand, darkLight, primary, yellow, gray, secondary} = Colors;
@@ -55,11 +56,24 @@ const Signup = ({navigation}) => {
             const auth = getAuth();
             createUserWithEmailAndPassword(auth, values.email, values.password)
             .then((userCredential) => {
+                signOut(auth)
                 // Signed in
-                const user = userCredential.user;
+                const userid = userCredential.user.uid;
+                const fullName = values.fullName;
+                const citys = selected;
+                console.log(fullName, citys, userid)
+                // firestore()
+                // .collection("UserInfo")
+                // .doc(userid)
+                // .set({
+                //     fullName,
+                //     citys,
+                //     created_at: firestore.FieldValue.serverTimestamp()
+                // })
+                // .then(() => console.log("firestore updated"))
+                // .catch((error) => console.log(error))
                 handleMessage("Cadastrado com sucesso!", 'SUCCESS');
                 setSubmitting(false);
-                navigation.navigate("Login");
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -107,11 +121,13 @@ const Signup = ({navigation}) => {
                             data={cidades} 
                             label="Localidades selecionadas"
                             save="value"
-                            onSelect={()=> console.log(selected)}
                             fontFamily=''
+                            // onSelect={()=> console.log(selected)}
                             notFoundText='Localidade não cadastrada no sistema.'
                             badgeStyles={{backgroundColor: gray}}
                             boxStyles={{backgroundColor: secondary}}
+                            // selectedItems ={selectedItems}
+
                         />
                         <MyTextInput 
                             label="Senha"
