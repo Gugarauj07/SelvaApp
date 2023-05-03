@@ -10,17 +10,10 @@ export default function App() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    if (app) {
       const auth = getAuth();
-      const subscriber = onAuthStateChanged(auth, (user) => {
-        if (user) {
-          setUser(user);
-        } else {
-          setUser(null);
-        }
-      });
-  }
-    return () => subscriber();
+      const subscriber = onAuthStateChanged(auth, setUser);
+
+      return subscriber;
   }, []);
 
   return (
