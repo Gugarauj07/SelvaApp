@@ -5,22 +5,30 @@ import {
     Colors,
     StyledInputLabel,
     StyledButton,
-    ButtonText
+    ButtonText,
+    StyledContainer,
+    InnerContainer,
 } from "./../components/styles"
 import {cidades} from "./../components/Constants"
 import { UserContext } from '../components/UserProvider'; 
+import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
+
+import firestore from '@react-native-firebase/firestore';
+
 
 const {brand, secondary, gray} = Colors;
 
 const Profile = () => {
 
     const {user} = useContext(UserContext)
+    console.log(user)
 
     const [selected, setSelected] = useState("");
     
 
   return (
-    <View>
+    
+        <StyledContainer>
         <Text>Usuário: {user}</Text>
         <StyledInputLabel>Onde quer monitorar?</StyledInputLabel>
             <MultipleSelectList 
@@ -39,7 +47,8 @@ const Profile = () => {
             <StyledButton >
                 <ButtonText>Salvar</ButtonText>
             </StyledButton>
-    </View>
+            </StyledContainer>
+    
   )
 }
 

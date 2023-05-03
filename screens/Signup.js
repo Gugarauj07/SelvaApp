@@ -21,14 +21,14 @@ import {
 } from "./../components/styles"
 import {cidades} from "./../components/Constants"
 import { View, ActivityIndicator } from 'react-native'
-import { Octicons, Ionicons, Fontisto } from '@expo/vector-icons'
+import { Octicons, Ionicons } from '@expo/vector-icons'
 import { Formik } from 'formik'
 import { getAuth, createUserWithEmailAndPassword, signOut } from "firebase/auth";
-import firestore from 'firebase/firestore';
-import { MultipleSelectList, SelectList } from 'react-native-dropdown-select-list'
+import { MultipleSelectList } from 'react-native-dropdown-select-list'
 
 const {brand, darkLight, primary, yellow, gray, secondary} = Colors;
 import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper'
+import {adicionarDocumento} from "../config/firebase"
 
 const Signup = ({navigation}) => {
 
@@ -37,14 +37,16 @@ const Signup = ({navigation}) => {
     const [messageType, setMessageType] =useState();
     const [selected, setSelected] = useState("");
 
-
+    // Função para adicionar um novo documento em uma coleção
+    
 
     const handleMessage = (message, type = "FAILED") => {
         setMessage(message);
         setMessageType(type);
     }
 
-    const registerFirebase = (values, {setSubmitting}) => {
+    const registerFirebase = async (values, {setSubmitting}) => {
+        setSubmitting(true);
         handleMessage(null);
         if (values.email == '' || values.password == ''|| values.confirmPassword == ''|| values.fullName == '') {
             handleMessage("Preencha todos os campos!")
@@ -57,30 +59,22 @@ const Signup = ({navigation}) => {
             createUserWithEmailAndPassword(auth, values.email, values.password)
             .then((userCredential) => {
                 signOut(auth)
-                // Signed in
                 const userid = userCredential.user.uid;
                 const fullName = values.fullName;
                 const citys = selected;
-                console.log(fullName, citys, userid)
-                // firestore()
-                // .collection("UserInfo")
-                // .doc(userid)
-                // .set({
-                //     fullName,
-                //     citys,
-                //     created_at: firestore.FieldValue.serverTimestamp()
-                // })
-                // .then(() => console.log("firestore updated"))
-                // .catch((error) => console.log(error))
+
+                
+                adicionarDocumento(fullName, citys, userid);
                 handleMessage("Cadastrado com sucesso!", 'SUCCESS');
-                setSubmitting(false);
+                navigation.navigate("Login");
             })
             .catch((error) => {
-                const errorCode = error.code;
                 const errorMessage = error.message;
                 handleMessage(errorMessage);
+            })
+            .finally(() => {
                 setSubmitting(false);
-            });
+            })
         }   
     }
 
