@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics, logEvent } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
-import { getFirestore, addDoc, collection } from "firebase/firestore";
+import { getFirestore, addDoc, collection, getDocs, query, where } from "firebase/firestore";
 
 const firebaseConfig = {
     apiKey: "AIzaSyDgAyeN77dEVMIboq5j6wEF9Dl1f82npCI",
@@ -19,9 +19,11 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
+const colRef = collection(db, "UserInfo")
+
 export async function adicionarDocumento(fullName, citys, userID) {
   try {
-    const docRef = await addDoc(collection(db, "UserInfo"), {
+    const docRef = await addDoc(colRef, {
       citys: citys,
       fullName: fullName,
       userID: userID
@@ -29,5 +31,18 @@ export async function adicionarDocumento(fullName, citys, userID) {
   console.log("Document written with ID: ", docRef.id);
   } catch (e) {
   console.error("Erro ao adicionar documento:", e);
+  }
+}
+
+export async function getDocumento(userID) {
+  const q = query(colRef, where("userID", "==", userID));
+
+  const querySnapshot = await getDocs(q);
+  if (querySnapshot.exists()) {
+    console.log("Document data:", querySnapshot.data());
+    return querySnapshot.data();
+  } else {
+    // docSnap.data() will be undefined in this case
+    console.log("No such document!");
   }
 }

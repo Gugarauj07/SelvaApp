@@ -58,7 +58,6 @@ const Signup = ({navigation}) => {
             const auth = getAuth();
             createUserWithEmailAndPassword(auth, values.email, values.password)
             .then((userCredential) => {
-                signOut(auth)
                 const userid = userCredential.user.uid;
                 const fullName = values.fullName;
                 const citys = selected;
@@ -66,15 +65,15 @@ const Signup = ({navigation}) => {
                 
                 adicionarDocumento(fullName, citys, userid);
                 handleMessage("Cadastrado com sucesso!", 'SUCCESS');
-                navigation.navigate("Login");
+                signOut(auth)
+                setSubmitting(false);
             })
             .catch((error) => {
                 const errorMessage = error.message;
                 handleMessage(errorMessage);
-            })
-            .finally(() => {
                 setSubmitting(false);
             })
+    
         }   
     }
 
