@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics, logEvent } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
-import { getFirestore, addDoc, collection, getDocs, query, where } from "firebase/firestore";
+import { getFirestore, addDoc, collection, getDocs, query, where, updateDoc } from "firebase/firestore";
 
 const firebaseConfig = {
     apiKey: "AIzaSyDgAyeN77dEVMIboq5j6wEF9Dl1f82npCI",
@@ -38,11 +38,23 @@ export async function getDocumento(userID) {
   const q = query(colRef, where("userID", "==", userID));
 
   const querySnapshot = await getDocs(q);
-  if (querySnapshot.exists()) {
-    console.log("Document data:", querySnapshot.data());
-    return querySnapshot.data();
+  if (querySnapshot) {
+    const docSnap = querySnapshot.docs[0];
+    console.log("Document data:", docSnap.data());
+    return docSnap.data();
   } else {
     // docSnap.data() will be undefined in this case
     console.log("No such document!");
   }
+}
+export async function updateDocumento(userID, citys, notification) {
+  const q = query(colRef, where("userID", "==", userID));
+
+  await updateDoc(q, {
+    citys: citys
+    // "notification": notification
+  });
+
+  console.log("updated")
+
 }

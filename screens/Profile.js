@@ -1,5 +1,6 @@
-import React, {useState, useContext} from 'react'
-import { View, Text } from 'react-native';
+import React, {useState, useContext, useEffect} from 'react'
+import Checkbox from 'expo-checkbox';
+import { View, Text, StyleSheet } from 'react-native';
 import { MultipleSelectList, SelectList } from 'react-native-dropdown-select-list'
 import {
     Colors,
@@ -7,11 +8,10 @@ import {
     StyledButton,
     ButtonText,
     StyledContainer,
-    InnerContainer,
 } from "./../components/styles"
 import {cidades} from "./../components/Constants"
 import { UserContext } from '../components/UserProvider'; 
-import {getDocumento} from "../config/firebase"
+import {getDocumento, updateDocumento} from "../config/firebase"
 
 const {brand, secondary, gray} = Colors;
 
@@ -20,15 +20,24 @@ const Profile = () => {
     const {user} = useContext(UserContext)
 
     const [selected, setSelected] = useState("");
+    const [isChecked, setChecked] = useState();
+    const [data, setData] = useState({"fullName": "", "citys": []});
 
-    // const data = getDocumento(user);
-    // console.log(data);
+    useEffect(() => {
+        getDocumento(user)
+        .then(data => {
+            setData(data)
+        })
+        .catch(error => {
+            console.error(error);
+        });
+    }, []);
     
 
   return (
     
         <StyledContainer>
-        <Text>Usuário: {user}</Text>
+        <Text>Bem-vindo de volta {data.fullName}!</Text>
         <StyledInputLabel>Onde quer monitorar?</StyledInputLabel>
             <MultipleSelectList 
                 setSelected={(val) => setSelected(val)} 
@@ -43,12 +52,39 @@ const Profile = () => {
                 searchPlaceholder = "Procurar"
             />
 
-            <StyledButton >
+        <View style={styles.section}>
+            <Checkbox 
+            style={styles.checkbox}
+            color={isChecked ? '#4630EB' : undefined}
+            value={isChecked}
+            onValueChange={setChecked} />
+            <Text style={styles.paragraph}>Quer receber notificações?</Text>
+        </View>
+        
+
+            <StyledButton onPress={() => updateDocumento(user, data.citys, isChecked)}>
                 <ButtonText>Salvar</ButtonText>
             </StyledButton>
             </StyledContainer>
     
   )
 }
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      marginHorizontal: 16,
+      marginVertical: 32,
+    },
+    section: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    paragraph: {
+      fontSize: 15,
+    },
+    checkbox: {
+      margin: 8,
+    },
+  });
 
 export default Profile
