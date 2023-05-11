@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics, logEvent } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
-import { getFirestore, addDoc, collection, getDocs, query, where, updateDoc } from "firebase/firestore";
+import { getFirestore, addDoc, collection, getDoc, doc, setDoc, updateDoc } from "firebase/firestore";
 
 const firebaseConfig = {
     apiKey: "AIzaSyDgAyeN77dEVMIboq5j6wEF9Dl1f82npCI",
@@ -23,38 +23,36 @@ const colRef = collection(db, "UserInfo")
 
 export async function adicionarDocumento(fullName, citys, userID) {
   try {
-    const docRef = await addDoc(colRef, {
+    await setDoc(doc(db, "UserInfo", userID), {
       citys: citys,
       fullName: fullName,
-      userID: userID
   });
-  console.log("Document written with ID: ", docRef.id);
+  console.log("Document written!!");
   } catch (e) {
   console.error("Erro ao adicionar documento:", e);
   }
 }
 
 export async function getDocumento(userID) {
-  const q = query(colRef, where("userID", "==", userID));
+  const docRef = doc(db, "UserInfo", userID);
 
-  const querySnapshot = await getDocs(q);
+  const querySnapshot = await getDoc(docRef);
+  // console.log(querySnapshot);
   if (querySnapshot) {
-    const docSnap = querySnapshot.docs[0];
-    console.log("Document data:", docSnap.data());
-    return docSnap.data();
+    const docSnap = querySnapshot.data();
+    console.log("Document data:", docSnap);
+    return docSnap;
   } else {
     // docSnap.data() will be undefined in this case
     console.log("No such document!");
   }
 }
 export async function updateDocumento(userID, citys, notification) {
-  const q = query(colRef, where("userID", "==", userID));
-
-  await updateDoc(q, {
-    citys: citys
-    // "notification": notification
+  await updateDoc(doc(db, "UserInfo", userID), {
+    citys: citys,
+    notification: notification
   });
-
-  console.log("updated")
+  console.log("Document updated!")
+  console.log(citys)
 
 }

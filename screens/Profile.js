@@ -22,6 +22,7 @@ const Profile = () => {
     const [selected, setSelected] = useState("");
     const [isChecked, setChecked] = useState();
     const [data, setData] = useState({"fullName": "", "citys": []});
+    console.log(data);
 
     useEffect(() => {
         getDocumento(user)
@@ -62,7 +63,7 @@ const Profile = () => {
         </View>
         
 
-            <StyledButton onPress={() => updateDocumento(user, data.citys, isChecked)}>
+            <StyledButton onPress={() => updateDocumento(user, selected, isChecked)}>
                 <ButtonText>Salvar</ButtonText>
             </StyledButton>
             </StyledContainer>
