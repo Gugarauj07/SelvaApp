@@ -1,12 +1,15 @@
-import React, {useEffect, useState,} from 'react'
+import React, {useEffect, useState, useContext} from 'react'
 import { Text, StyleSheet} from 'react-native'
 import {
     Colors,
     StyledContainer,
     InnerContainer,
 } from "./../components/styles"
-import MapView, { PROVIDER_GOOGLE, Heatmap } from "react-native-maps"
+import MapView, { PROVIDER_GOOGLE, Heatmap, Marker } from "react-native-maps"
 import axios from 'axios';
+import {getDocumento} from "../config/firebase"
+import { UserContext } from '../components/UserProvider'; 
+import {cidades} from "./../components/Constants"
 
 import { View, Dimensions } from 'react-native'
 const { height, width } = Dimensions.get( 'window' );
@@ -16,22 +19,23 @@ const LATITUDE_DELTA = 50;
 const LONGITUDE_DELTA = LATITUDE_DELTA * (width / height);
 
 import moment from 'moment-timezone';
-// const currentDate = moment().format('YYYY-MM-DD');
-// import 'moment-timezone';
-// console.log(currentDate); // saída: 2023-04-27
+
 
 
 const Home = ({navigation, route }) => {
 
   const [dataPoints, setdataPoints] = useState();
   
+  const {user} = useContext(UserContext)
+  const [cities, setCities] = useState([]);
 
   const now = moment().tz('America/Manaus');
   const year = now.format('YYYY');
   const month = now.format('MM');
   const day = now.format('DD');
   const formattedDate = `${year}-${month}-${day}`;
-  console.log(formattedDate);
+  console.log(cities);
+
 
   useEffect(() => {
     axios
@@ -47,7 +51,25 @@ const Home = ({navigation, route }) => {
         });
         setdataPoints(latLngs)
     });
+    getDocumento(user)
+    .then(data => {
+        setCities(data["citys"])
+    })
+    .catch(error => {
+        console.error(error);
+    });
   }, [formattedDate]);
+
+  const cityMarkers = cities.map(city => {
+    const { key, latitude, longitude } = cidades.find(item => item.value === city);
+    return {
+      key: key,
+      value: city,
+      latitude: latitude,
+      longitude: longitude,
+    }
+  });
+
 
   return (
     <View style={styles.container}>
@@ -62,6 +84,14 @@ const Home = ({navigation, route }) => {
           longitudeDelta: LONGITUDE_DELTA
           
         }}>
+          {cities && cityMarkers.map(city => (
+            <Marker
+              key={city.key}
+              coordinate={{ latitude: city.latitude, longitude: city.longitude }}
+              title={city.value}
+            />
+          ))}
+
           {dataPoints &&
           <Heatmap points={dataPoints}
                           opacity={1}

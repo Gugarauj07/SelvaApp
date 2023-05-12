@@ -1,7 +1,7 @@
 import React, {useState, useContext, useEffect} from 'react'
 import Checkbox from 'expo-checkbox';
 import { View, Text, StyleSheet } from 'react-native';
-import { MultipleSelectList, SelectList } from 'react-native-dropdown-select-list'
+import { MultipleSelectList } from 'react-native-dropdown-select-list'
 import {
     Colors,
     StyledInputLabel,
@@ -22,7 +22,6 @@ const Profile = () => {
     const [selected, setSelected] = useState("");
     const [isChecked, setChecked] = useState();
     const [data, setData] = useState({"fullName": "", "citys": []});
-    console.log(data);
 
     useEffect(() => {
         getDocumento(user)
