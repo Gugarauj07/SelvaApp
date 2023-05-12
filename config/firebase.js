@@ -53,6 +53,4 @@ export async function updateDocumento(userID, citys, notification) {
     notification: notification
   });
   console.log("Document updated!")
-  console.log(citys)
-
 }
