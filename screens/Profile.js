@@ -8,6 +8,7 @@ import {
     StyledButton,
     ButtonText,
     StyledContainer,
+    MsgBox
 } from "./../components/styles"
 import {cidades} from "./../components/Constants"
 import { UserContext } from '../components/UserProvider'; 
@@ -18,9 +19,10 @@ const {brand, secondary, gray} = Colors;
 const Profile = () => {
 
     const {user} = useContext(UserContext)
+    const [message, setMessage] =useState();
 
     const [selected, setSelected] = useState("");
-    const [isChecked, setChecked] = useState();
+    const [isChecked, setChecked] = useState(false);
     const [data, setData] = useState({"fullName": "", "citys": []});
 
     useEffect(() => {
@@ -37,6 +39,7 @@ const Profile = () => {
   return (
     
         <StyledContainer>
+        <MsgBox type={"SUCCESS"}>{message}</MsgBox>
         <Text>Bem-vindo de volta {data.fullName}!</Text>
         <StyledInputLabel>Onde quer monitorar?</StyledInputLabel>
             <MultipleSelectList 

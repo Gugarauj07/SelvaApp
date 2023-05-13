@@ -51,14 +51,18 @@ const Home = ({navigation, route }) => {
         });
         setdataPoints(latLngs)
     });
-    getDocumento(user)
-    .then(data => {
-        setCities(data["citys"])
-    })
-    .catch(error => {
-        console.error(error);
-    });
+    
   }, [formattedDate]);
+
+  useEffect(() => {
+    getDocumento(user)
+      .then(data => {
+          setCities(data["citys"])
+      })
+      .catch(error => {
+          console.error(error);
+      });
+  }, [navigation]);
 
   const cityMarkers = cities.map(city => {
     const { key, latitude, longitude } = cidades.find(item => item.value === city);
