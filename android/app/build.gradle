@@ -113,9 +113,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace 'com.gugarauj07.SelvaApp'
+    namespace 'com.gugarauj07.expodev'
     defaultConfig {
-        applicationId 'com.gugarauj07.SelvaApp'
+        applicationId 'com.gugarauj07.expodev'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -235,5 +235,3 @@ dependencies {
 
 apply from: new File(["node", "--print", "require.resolve('@react-native-community/cli-platform-android/package.json')"].execute(null, rootDir).text.trim(), "../native_modules.gradle");
 applyNativeModulesAppBuildGradle(project)
-
-apply plugin: 'com.google.gms.google-services'
