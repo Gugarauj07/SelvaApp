@@ -1,20 +1,29 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import 'react-native-gesture-handler'
+import { useState, useEffect } from 'react';
+import AuthNavigator from './navigators/AuthNavigator';
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import DrawerNavigator from './navigators/DrawerNavigator';
+import { NavigationContainer } from '@react-navigation/native';
+import UserProvider from './components/UserProvider';
+// import {app} from './config/firebase'
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+  const [user, setUser] = useState(null);
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  useEffect(() => {
+      const auth = getAuth();
+      const subscriber = onAuthStateChanged(auth, setUser);
+
+      return subscriber;
+  }, []);
+
+  return (
+    <NavigationContainer>
+      {user ? (<UserProvider user={user.uid}>
+        <DrawerNavigator />
+      </UserProvider>) : (
+          <AuthNavigator />
+      )}
+    </NavigationContainer>
+    );
+}
