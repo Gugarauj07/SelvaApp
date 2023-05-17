@@ -113,9 +113,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace 'com.gugarauj07.expodev'
+    namespace 'com.gugarauj07.selvaapp'
     defaultConfig {
-        applicationId 'com.gugarauj07.expodev'
+        applicationId 'com.gugarauj07.selvaapp'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

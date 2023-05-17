@@ -1,4 +1,4 @@
-package com.gugarauj07.expodev;
+package com.gugarauj07.selvaapp;
 
 import android.app.Application;
 import android.content.res.Configuration;
