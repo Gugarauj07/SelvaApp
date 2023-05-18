@@ -121,7 +121,7 @@ const Login = ({navigation}) => {
     <KeyboardAvoidingWrapper><StyledContainer>
         <StatusBar style="dark"/>
         <InnerContainer>
-            <PageLogo resizeMode="cover" source={require('./../assets/icon.png')} />
+            <PageLogo resizeMode="cover" source={require('./../assets/logo.png')} />
             {/* <PageTitle>App Selva</PageTitle> */}
             <SubTitle>Login de Usuário</SubTitle>
 
