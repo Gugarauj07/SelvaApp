@@ -1,7 +1,7 @@
 import React, {useState, useContext, useEffect} from 'react'
 import Checkbox from 'expo-checkbox';
 import { View, Text, StyleSheet } from 'react-native';
-import { MultipleSelectList } from 'react-native-dropdown-select-list'
+import { MultipleSelectList, SelectList } from 'react-native-dropdown-select-list'
 import {
     Colors,
     StyledInputLabel,
@@ -24,6 +24,7 @@ const Profile = () => {
     const [selected, setSelected] = useState("");
     const [isChecked, setChecked] = useState(false);
     const [data, setData] = useState({"fullName": "", "citys": []});
+    console.log(data);
 
     useEffect(() => {
         getDocumento(user)
@@ -39,7 +40,7 @@ const Profile = () => {
   return (
     
         <StyledContainer>
-        <MsgBox type={"SUCCESS"}>{message}</MsgBox>
+          <MsgBox type={"SUCCESS"}>{message}</MsgBox>
         <Text>Bem-vindo de volta {data.fullName}!</Text>
         <StyledInputLabel>Onde quer monitorar?</StyledInputLabel>
             <MultipleSelectList 
@@ -47,7 +48,7 @@ const Profile = () => {
                 data={cidades} 
                 label="Localidades selecionadas"
                 save="value"
-                onSelect={()=> console.log(selected)}
+                // onSelect={()=> console.log(selected)}
                 fontFamily=''
                 notFoundText='Localidade não cadastrada no sistema.'
                 badgeStyles={{backgroundColor: gray}}

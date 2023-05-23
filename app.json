@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "SelvaApp",
-    "slug": "SelvaApp",
+    "name": "selvaapp",
+    "slug": "selvaapp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -23,14 +23,28 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.gugarauj07.SelvaApp"
+      "googleServicesFile": "./google-services.json",
+      "package": "com.gugarauj07.selvaapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
+    "plugins": [
+      "@react-native-firebase/app",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "compileSdkVersion": 33,
+            "targetSdkVersion": 33,
+            "buildToolsVersion": "33.0.0"
+          }
+        }
+      ]
+    ],
     "extra": {
       "eas": {
-        "projectId": "79c5ebb0-7332-45d6-bcc6-80f4e4683829"
+        "projectId": "34ecae35-fa98-4386-a4d8-2210b9e6b83b"
       }
     }
   }

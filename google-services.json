@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "803360995227",
+    "firebase_url": "https://selvaapp-7f4dd-default-rtdb.firebaseio.com",
+    "project_id": "selvaapp-7f4dd",
+    "storage_bucket": "selvaapp-7f4dd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:803360995227:android:6b7262601d85306820933e",
+        "android_client_info": {
+          "package_name": "com.gugarauj07.selvaapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "803360995227-59jkc578s1ihta8e01sr7hpm77cfd174.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAn5BxtlGeH7GxPO7aS7JeaqqnuA583Hhw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "803360995227-59jkc578s1ihta8e01sr7hpm77cfd174.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

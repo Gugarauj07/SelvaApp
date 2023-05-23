@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
-import { getAnalytics, logEvent } from "firebase/analytics";
+// import { getAnalytics, logEvent } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
-import { getFirestore, addDoc, collection, getDoc, doc, setDoc, updateDoc } from "firebase/firestore";
+import { getFirestore, collection, getDoc, doc, setDoc, updateDoc, onSnapshot } from "firebase/firestore";
 
 const firebaseConfig = {
     apiKey: "AIzaSyDgAyeN77dEVMIboq5j6wEF9Dl1f82npCI",
@@ -17,9 +17,8 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const db = getFirestore(app);
+export const db = getFirestore(app);
 
-const colRef = collection(db, "UserInfo")
 
 export async function adicionarDocumento(fullName, citys, userID) {
   try {

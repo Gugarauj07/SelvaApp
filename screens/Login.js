@@ -24,11 +24,16 @@ import {
 import { View, ActivityIndicator, TouchableOpacity, Text } from 'react-native'
 import { Octicons, Ionicons, Fontisto } from '@expo/vector-icons'
 import { Formik } from 'formik'
-import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail, GoogleAuthProvider,signInWithCredential } from "firebase/auth";
 
 
 const {brand, darkLight, primary} = Colors;
+/* import { GoogleSignin } from 'react-native-google-signin';
 
+GoogleSignin.configure({
+  scopes: ['email'],
+  webClientId: '803360995227-59jkc578s1ihta8e01sr7hpm77cfd174.apps.googleusercontent.com',
+}); */
 
 import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
 
@@ -73,7 +78,7 @@ const Login = ({navigation}) => {
 
 
     const handleForgotPassword = (email) => {
-        handleMessage(null);
+        /* handleMessage(null);
         console.log(email);
         if (email == '') {
             handleMessage("Preencha o campo de email para enviarmos o link!");
@@ -88,40 +93,27 @@ const Login = ({navigation}) => {
                 console.log(error);
                 handleMessage(error.message)
             });
-        }
+        } */
     }
 
-    // const handleGoogleSignin = async () => {
-    //     const auth = getAuth();
-    //     signInWithRedirect(auth, provider);
-    //     getRedirectResult(auth)
-    //     .then((result) => {
-    //         // This gives you a Google Access Token. You can use it to access Google APIs.
-    //         const credential = GoogleAuthProvider.credentialFromResult(result);
-    //         const token = credential.accessToken;
+const handleGoogleSignin = async () => {
+    const auth = getAuth();
+            await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+            // Get the users ID token
+            const { idToken } = await GoogleSignin.signIn();
 
-    //         // The signed-in user info.
-    //         const user = result.user;
-    //         // IdP data available using getAdditionalUserInfo(result)
-    //         // ...
-    //     }).catch((error) => {
-    //         // Handle Errors here.
-    //         const errorCode = error.code;
-    //         const errorMessage = error.message;
-    //         // The email of the user's account used.
-    //         const email = error.customData.email;
-    //         // The AuthCredential type that was used.
-    //         const credential = GoogleAuthProvider.credentialFromError(error);
-    //         // ...
-    //     });
+            // Create a Google credential with the token
+            const googleCredential = GoogleAuthProvider.credential(idToken);
 
-    // }
+            // Sign-in the user with the credential
+            return signInWithCredential(auth, googleCredential);
+    }
 
   return (
     <KeyboardAvoidingWrapper><StyledContainer>
         <StatusBar style="dark"/>
         <InnerContainer>
-            <PageLogo resizeMode="cover" source={require('./../assets/logo-beta.png')} />
+            <PageLogo resizeMode="cover" source={require('./../assets/logo.png')} />
             {/* <PageTitle>App Selva</PageTitle> */}
             <SubTitle>Login de Usuário</SubTitle>
 
@@ -179,7 +171,7 @@ const Login = ({navigation}) => {
             </Formik>
             <StyledFormArea>
                 <Line />
-                <StyledButton google={true} >
+                <StyledButton google={true} /* onPress={handleGoogleSignin} */>
                     <Fontisto name='google' color={primary} size={25} />
                     <ButtonText google={true}>Entre com o Google</ButtonText>
                 </StyledButton>
