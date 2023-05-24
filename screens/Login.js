@@ -78,7 +78,7 @@ const Login = ({navigation}) => {
 
 
     const handleForgotPassword = (email) => {
-        /* handleMessage(null);
+        handleMessage(null);
         console.log(email);
         if (email == '') {
             handleMessage("Preencha o campo de email para enviarmos o link!");
@@ -93,21 +93,21 @@ const Login = ({navigation}) => {
                 console.log(error);
                 handleMessage(error.message)
             });
-        } */
+        }
     }
 
-const handleGoogleSignin = async () => {
-    const auth = getAuth();
-            await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
-            // Get the users ID token
-            const { idToken } = await GoogleSignin.signIn();
+// const handleGoogleSignin = async () => {
+//     const auth = getAuth();
+//             await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+//             // Get the users ID token
+//             const { idToken } = await GoogleSignin.signIn();
 
-            // Create a Google credential with the token
-            const googleCredential = GoogleAuthProvider.credential(idToken);
+//             // Create a Google credential with the token
+//             const googleCredential = GoogleAuthProvider.credential(idToken);
 
-            // Sign-in the user with the credential
-            return signInWithCredential(auth, googleCredential);
-    }
+//             // Sign-in the user with the credential
+//             return signInWithCredential(auth, googleCredential);
+//     }
 
   return (
     <KeyboardAvoidingWrapper><StyledContainer>
