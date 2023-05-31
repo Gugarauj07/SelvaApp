@@ -9,3 +9,4 @@ Tarefas:
 2. Fazer a caixinha escolha de visualizaçao dos dados no mapa, assim como esta no site
 3. Implementar a API purpleair
 4. Atualizar os icones do app
+5. Traduzir as mensagens de erro para o português
