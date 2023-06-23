@@ -11,7 +11,7 @@
     "types": [
       "react-native",
       "jest",
-      "@types/styled-components-react-native"
+      "styled-components-react-native"
     ],
     "noEmit": true,
     "strict": true,
@@ -24,7 +24,6 @@
     "noFallthroughCasesInSwitch": true,
     "noImplicitOverride": true,
     "allowUnreachableCode": false,
-    "baseUrl": ".",
   },
   "exclude": [
     "node_modules",

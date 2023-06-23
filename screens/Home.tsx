@@ -8,6 +8,8 @@ import MapView, { PROVIDER_GOOGLE, Heatmap, Marker, Geojson } from "react-native
 import  {geojs}  from "../assets/amazonia_legal"
 import { View, Dimensions } from 'react-native'
 import usePurpleAirAndNASAData from "../components/GetData"
+import RealSensorMarker from "../components/RealSensorMarker"
+
 import moment from 'moment-timezone';
 
 const { height, width } = Dimensions.get('window');
@@ -15,7 +17,6 @@ const LATITUDE = -3.119027;
 const LONGITUDE = -60.021731;
 const LATITUDE_DELTA = 50;
 const LONGITUDE_DELTA = LATITUDE_DELTA * (width / height);
-
 
 
 
@@ -73,24 +74,7 @@ const Home = () => {
             strokeWidth={2}
           />
         {Array.isArray(purpleAirData) && purpleAirData.length > 0 && purpleAirData.map(sensor => (
-          <Marker
-            key={sensor[0]}
-            coordinate={{ latitude: sensor[3], longitude:  sensor[4] }}
-            // title={sensor[5]}
-          >
-            <View
-              style={{
-                width: 30,
-                height: 20,
-                backgroundColor: 'red',
-                alignItems: 'center',
-                justifyContent: 'center',
-                borderRadius: 5,
-              }}
-            >
-              <Text style={{ color: 'white', fontSize: 10 }}>{sensor[5]}</Text>
-            </View>
-          </Marker>
+          <RealSensorMarker sensor={sensor}/>
         ))}
 
 

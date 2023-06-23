@@ -37,7 +37,7 @@ const Signup = ({
     const [hidePassword, setHidePassword] =useState(true);
     const [message, setMessage] =useState();
     const [messageType, setMessageType] =useState();
-    const [selected, setSelected] = useState("");
+    const [selected, setSelected] = useState([]);
 
     // Função para adicionar um novo documento em uma coleção
     

@@ -23,14 +23,15 @@ const Profile = () => {
 
     const [selected, setSelected] = useState([]);
     const [isChecked, setChecked] = useState(false);
-    const [data, setData] = useState({"fullName": "", "citys": []});
+
+    type DocumentData = {fullName?: string, citys?: string[]}
+    const [data, setData] = useState<DocumentData>({fullName: "", citys: []});
     console.log(data);
 
     useEffect(() => {
         getDocumento(user)
         .then(data => {
-            // @ts-expect-error TS(2345): Argument of type 'DocumentData | undefined' is not... Remove this comment to see the full error message
-            setData(data)
+          if (data) {setData(data)}
         })
         .catch(error => {
             console.error(error);
