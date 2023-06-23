@@ -15,7 +15,7 @@ const RootStack = () => {
     return (
             <Stack.Navigator
                 screenOptions={{
-                    headerStyled: {
+                    headerStyle: {
                         backgroundColor: 'transparent',
                     },
                     headerTintColor: tertiary,

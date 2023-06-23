@@ -12,7 +12,7 @@ import {
 } from "./../components/styles"
 import {cidades} from "./../components/Constants"
 import { UserContext } from '../components/UserProvider'; 
-import {getDocumento, updateDocumento} from "../config/firebase"
+import {getDocumento, updateDocumento} from "../config/firebase";
 
 const {brand, secondary, gray} = Colors;
 
@@ -21,7 +21,7 @@ const Profile = () => {
     const {user} = useContext(UserContext)
     const [message, setMessage] =useState();
 
-    const [selected, setSelected] = useState("");
+    const [selected, setSelected] = useState([]);
     const [isChecked, setChecked] = useState(false);
     const [data, setData] = useState({"fullName": "", "citys": []});
     console.log(data);
@@ -29,6 +29,7 @@ const Profile = () => {
     useEffect(() => {
         getDocumento(user)
         .then(data => {
+            // @ts-expect-error TS(2345): Argument of type 'DocumentData | undefined' is not... Remove this comment to see the full error message
             setData(data)
         })
         .catch(error => {
@@ -38,40 +39,38 @@ const Profile = () => {
     
 
   return (
-    
-        <StyledContainer>
-          <MsgBox type={"SUCCESS"}>{message}</MsgBox>
-        <Text>Bem-vindo de volta {data.fullName}!</Text>
-        <StyledInputLabel>Onde quer monitorar?</StyledInputLabel>
-            <MultipleSelectList 
-                setSelected={(val) => setSelected(val)} 
-                data={cidades} 
-                label="Localidades selecionadas"
-                save="value"
-                // onSelect={()=> console.log(selected)}
-                fontFamily=''
-                notFoundText='Localidade não cadastrada no sistema.'
-                badgeStyles={{backgroundColor: gray}}
-                boxStyles={{backgroundColor: secondary}}
-                searchPlaceholder = "Procurar"
-            />
+      <StyledContainer>
+        <MsgBox type={"SUCCESS"}>{message}</MsgBox>
+      <Text>Bem-vindo de volta {data.fullName}!</Text>
+      <StyledInputLabel>Onde quer monitorar?</StyledInputLabel>
+          <MultipleSelectList 
+              setSelected={(val: any) => setSelected(val)} 
+              data={cidades} 
+              label="Localidades selecionadas"
+              save="value"
+              // onSelect={()=> console.log(selected)}
+              fontFamily=''
+              notFoundText='Localidade não cadastrada no sistema.'
+              badgeStyles={{backgroundColor: gray}}
+              boxStyles={{backgroundColor: secondary}}
+              searchPlaceholder = "Procurar"
+          />
 
-        <View style={styles.section}>
-            <Checkbox 
-            style={styles.checkbox}
-            color={isChecked ? '#4630EB' : undefined}
-            value={isChecked}
-            onValueChange={setChecked} />
-            <Text style={styles.paragraph}>Quer receber notificações?</Text>
-        </View>
-        
+      <View style={styles.section}>
+          <Checkbox 
+          style={styles.checkbox}
+          color={isChecked ? '#4630EB' : undefined}
+          value={isChecked}
+          onValueChange={setChecked} />
+          <Text style={styles.paragraph}>Quer receber notificações?</Text>
+      </View>
+      
 
-            <StyledButton onPress={() => updateDocumento(user, selected, isChecked)}>
-                <ButtonText>Salvar</ButtonText>
-            </StyledButton>
-            </StyledContainer>
-    
-  )
+          <StyledButton onPress={() => updateDocumento(user, selected, isChecked)}>
+              <ButtonText>Salvar</ButtonText>
+          </StyledButton>
+          </StyledContainer>
+  );
 }
 const styles = StyleSheet.create({
     container: {

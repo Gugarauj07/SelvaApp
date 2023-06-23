@@ -20,7 +20,7 @@ const {primary, brand} = Colors;
 
 const {width} = Dimensions.get('screen');
 
-const CustomDrawer = props => {
+const CustomDrawer = (props: any) => {
 
   const handleSignOut = () => {
     const auth = getAuth();

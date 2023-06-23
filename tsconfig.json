@@ -5,9 +5,14 @@
     "esModuleInterop": true,
     "isolatedModules": true,
     "jsx": "react-native",
-    "lib": ["esnext"],
-    "types": ["react-native", "jest"],
-    "moduleResolution": "node",
+    "lib": [
+      "esnext"
+    ],
+    "types": [
+      "react-native",
+      "jest",
+      "@types/styled-components-react-native"
+    ],
     "noEmit": true,
     "strict": true,
     "target": "esnext",
@@ -18,12 +23,15 @@
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitOverride": true,
-    "allowUnreachableCode": false
+    "allowUnreachableCode": false,
+    "baseUrl": ".",
   },
   "exclude": [
     "node_modules",
     "babel.config.js",
     "metro.config.js",
     "jest.config.js"
-  ]
-} 
+  ],
+  "extends": "expo/tsconfig.base",
+  "include": ["./**/*"]
+}

@@ -7,7 +7,7 @@ import {
     TextLink,
 } from "./../components/styles"
 
-const About = ({navigation, route }) => {
+const About = () => {
   return (
 
       <StyledContainer>

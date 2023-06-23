@@ -20,7 +20,7 @@ const auth = getAuth(app);
 export const db = getFirestore(app);
 
 
-export async function adicionarDocumento(fullName, citys, userID) {
+export async function adicionarDocumento(fullName: string, citys: string[], userID: string) {
   try {
     await setDoc(doc(db, "UserInfo", userID), {
       citys: citys,
@@ -32,7 +32,7 @@ export async function adicionarDocumento(fullName, citys, userID) {
   }
 }
 
-export async function getDocumento(userID) {
+export async function getDocumento(userID: string) {
   const docRef = doc(db, "UserInfo", userID);
 
   const querySnapshot = await getDoc(docRef);
@@ -44,9 +44,10 @@ export async function getDocumento(userID) {
   } else {
     // docSnap.data() will be undefined in this case
     console.log("No such document!");
+    return
   }
 }
-export async function updateDocumento(userID, citys, notification) {
+export async function updateDocumento(userID: string, citys: string[], notification: boolean) {
   await updateDoc(doc(db, "UserInfo", userID), {
     citys: citys,
     notification: notification

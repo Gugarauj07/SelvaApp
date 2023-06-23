@@ -30,7 +30,9 @@ const {brand, darkLight, primary, yellow, gray, secondary} = Colors;
 import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper'
 import {adicionarDocumento} from "../config/firebase"
 
-const Signup = ({navigation}) => {
+const Signup = ({
+    navigation
+}: any) => {
 
     const [hidePassword, setHidePassword] =useState(true);
     const [message, setMessage] =useState();
@@ -40,12 +42,15 @@ const Signup = ({navigation}) => {
     // Função para adicionar um novo documento em uma coleção
     
 
-    const handleMessage = (message, type = "FAILED") => {
+    const handleMessage = (message: any, type = "FAILED") => {
         setMessage(message);
+        // @ts-expect-error TS(2345): Argument of type 'string' is not assignable to par... Remove this comment to see the full error message
         setMessageType(type);
     }
 
-    const registerFirebase = async (values, {setSubmitting}) => {
+    const registerFirebase = async (values: any, {
+        setSubmitting
+    }: any) => {
         setSubmitting(true);
         handleMessage(null);
         if (values.email == '' || values.password == ''|| values.confirmPassword == ''|| values.fullName == '') {
@@ -78,104 +83,111 @@ const Signup = ({navigation}) => {
     }
 
   return (
-    <KeyboardAvoidingWrapper><StyledContainer>
-        <StatusBar style="dark"/>
-        <InnerContainer>
-            {/* <PageTitle>App Selva</PageTitle> */}
-            <SubTitle>Registro de Usuário</SubTitle>
+      <KeyboardAvoidingWrapper><StyledContainer>
+          <StatusBar style="dark"/>
+          <InnerContainer>
+              {/* <PageTitle>App Selva</PageTitle> */}
+              <SubTitle>Registro de Usuário</SubTitle>
 
-            <Formik
-            initialValues={{fullName:"", email: '', citys:"", password: '', confirmPassword: ''}}
-            onSubmit={registerFirebase}>
-                {({handleChange, handleBlur, handleSubmit, values, isSubmitting}) => 
-                    (<StyledFormArea>
-                        <MyTextInput 
-                            label="Nome completo"
-                            icon="person"
-                            placeholder="Richard"
-                            placeHolderTextColor={darkLight}
-                            onChangeText={handleChange("fullName")}
-                            onBlur={handleBlur("fullName")}
-                            value={values.fullName}
-                        />
-                        <MyTextInput 
-                            label="Endereço de Email"
-                            icon="mail"
-                            placeholder="example@gmail.com"
-                            placeHolderTextColor={darkLight}
-                            onChangeText={handleChange("email")}
-                            onBlur={handleBlur("email")}
-                            value={values.email}
-                            keyboardType="email-address"
-                        />
-                        <StyledInputLabel>Onde quer monitorar?</StyledInputLabel>
-                        <MultipleSelectList 
-                            setSelected={(val) => setSelected(val)} 
-                            data={cidades} 
-                            label="Localidades selecionadas"
-                            save="value"
-                            fontFamily=''
-                            // onSelect={()=> console.log(selected)}
-                            notFoundText='Localidade não cadastrada no sistema.'
-                            badgeStyles={{backgroundColor: gray}}
-                            boxStyles={{backgroundColor: secondary}}
-                            // selectedItems ={selectedItems}
+              <Formik
+              initialValues={{fullName:"", email: '', citys:"", password: '', confirmPassword: ''}}
+              onSubmit={registerFirebase}>
+                  {({handleChange, handleBlur, handleSubmit, values, isSubmitting}) => 
+                      (<StyledFormArea>
+                          <MyTextInput 
+                              label="Nome completo"
+                              icon="person"
+                              placeholder="Richard"
+                              placeHolderTextColor={darkLight}
+                              onChangeText={handleChange("fullName")}
+                              onBlur={handleBlur("fullName")}
+                              value={values.fullName}
+                          />
+                          <MyTextInput 
+                              label="Endereço de Email"
+                              icon="mail"
+                              placeholder="example@gmail.com"
+                              placeHolderTextColor={darkLight}
+                              onChangeText={handleChange("email")}
+                              onBlur={handleBlur("email")}
+                              value={values.email}
+                              keyboardType="email-address"
+                          />
+                          <StyledInputLabel>Onde quer monitorar?</StyledInputLabel>
+                          <MultipleSelectList 
+                              setSelected={(val: any) => setSelected(val)} 
+                              data={cidades} 
+                              label="Localidades selecionadas"
+                              save="value"
+                              fontFamily=''
+                              // onSelect={()=> console.log(selected)}
+                              notFoundText='Localidade não cadastrada no sistema.'
+                              badgeStyles={{backgroundColor: gray}}
+                              boxStyles={{backgroundColor: secondary}}
+                              // selectedItems ={selectedItems}
 
-                        />
-                        <MyTextInput 
-                            label="Senha"
-                            icon="lock"
-                            placeholder="* * * * * * *"
-                            placeHolderTextColor={darkLight}
-                            onChangeText={handleChange("password")}
-                            onBlur={handleBlur("password")}
-                            value={values.password}
-                            secureTextEntry={hidePassword}
-                            isPassword={true}
-                            hidePassword={hidePassword}
-                            setHidePassword = {setHidePassword}
-                        />
-                        <MyTextInput 
-                            label="Confirmar a Senha"
-                            icon="lock"
-                            placeholder="* * * * * * *"
-                            placeHolderTextColor={darkLight}
-                            onChangeText={handleChange("confirmPassword")}
-                            onBlur={handleBlur("confirmPassword")}
-                            value={values.confirmPassword}
-                            secureTextEntry={hidePassword}
-                            isPassword={true}
-                            hidePassword={hidePassword}
-                            setHidePassword = {setHidePassword}
-                        />
-                        <MsgBox type={messageType}>{message}</MsgBox>
-                        {!isSubmitting && <StyledButton onPress={handleSubmit}>
-                            <ButtonText>Registrar</ButtonText>
-                        </StyledButton>}
+                          />
+                          <MyTextInput 
+                              label="Senha"
+                              icon="lock"
+                              placeholder="* * * * * * *"
+                              placeHolderTextColor={darkLight}
+                              onChangeText={handleChange("password")}
+                              onBlur={handleBlur("password")}
+                              value={values.password}
+                              secureTextEntry={hidePassword}
+                              isPassword={true}
+                              hidePassword={hidePassword}
+                              setHidePassword = {setHidePassword}
+                          />
+                          <MyTextInput 
+                              label="Confirmar a Senha"
+                              icon="lock"
+                              placeholder="* * * * * * *"
+                              placeHolderTextColor={darkLight}
+                              onChangeText={handleChange("confirmPassword")}
+                              onBlur={handleBlur("confirmPassword")}
+                              value={values.confirmPassword}
+                              secureTextEntry={hidePassword}
+                              isPassword={true}
+                              hidePassword={hidePassword}
+                              setHidePassword = {setHidePassword}
+                          />
+                          <MsgBox type={messageType}>{message}</MsgBox>
+                          {!isSubmitting && <StyledButton onPress={handleSubmit}>
+                              <ButtonText>Registrar</ButtonText>
+                          </StyledButton>}
 
-                        {isSubmitting && <StyledButton disabled={true}>
-                            <ActivityIndicator size="large" color={primary} />
-                        </StyledButton>}
-                        <Line />
-                        
-                        <ExtraView>
-                            <ExtraText>
-                                Já tem uma conta?
-                            </ExtraText>
-                            <TextLink onPress={() => navigation.navigate("Login")}>
-                                <TextLinkContent>  Login</TextLinkContent>
-                            </TextLink>
-                        </ExtraView>
-                    </StyledFormArea>)
-                }
+                          {isSubmitting && <StyledButton disabled={true}>
+                              <ActivityIndicator size="large" color={primary} />
+                          </StyledButton>}
+                          <Line />
+                          
+                          <ExtraView>
+                              <ExtraText>
+                                  Já tem uma conta?
+                              </ExtraText>
+                              <TextLink onPress={() => navigation.navigate("Login")}>
+                                  <TextLinkContent>  Login</TextLinkContent>
+                              </TextLink>
+                          </ExtraView>
+                      </StyledFormArea>)
+                  }
 
-            </Formik>
-        </InnerContainer>
-    </StyledContainer></KeyboardAvoidingWrapper>
-  )
+              </Formik>
+          </InnerContainer>
+      </StyledContainer></KeyboardAvoidingWrapper>
+  );
 }
 
-const MyTextInput = ({label, icon,isPassword, hidePassword, setHidePassword, ...props}) => {
+const MyTextInput = ({
+    label,
+    icon,
+    isPassword,
+    hidePassword,
+    setHidePassword,
+    ...props
+}: any) => {
     return (
         <View>
             <LeftIcon>

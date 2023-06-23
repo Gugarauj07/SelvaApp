@@ -1,7 +1,14 @@
 import React, { createContext} from 'react';
-export const UserContext = createContext({})
 
-function UserProvider({children, user}) {
+interface UserContextProps {
+    user: any; // Altere o tipo do usuário para corresponder à sua estrutura de dados
+  }
+export const UserContext = createContext<UserContextProps>({user: undefined})
+
+function UserProvider({
+    children,
+    user
+}: any) {
     return(
         <UserContext.Provider value={{ user }}>
             {children}

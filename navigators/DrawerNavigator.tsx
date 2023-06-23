@@ -1,17 +1,22 @@
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import Home from './../screens/Home';
-import Profile from './../screens/Profile';
-import About from './../screens/About';
+import Home from '../screens/Home';
+import Profile from '../screens/Profile';
+import About from '../screens/About';
 import { Colors } from '../components/styles';
 import CustomDrawer  from '../components/CustomDrawer';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { useRoute } from '@react-navigation/native';
 
 const {primary, brand} = Colors;
 
 const Drawer = createDrawerNavigator();
 
 const  DrawerNavigator = () => {
+
+    interface DrawerIconProps {
+        focused?: boolean;
+        color: string;
+        size?: number;
+      }
   
     return (
         <Drawer.Navigator 
@@ -27,21 +32,33 @@ const  DrawerNavigator = () => {
           <Drawer.Screen name="Home Drawer" component={Home} 
             options={{
                 title: 'Mapa',
-                drawerIcon: ({focused, color, size}) => (
+                drawerIcon: ({
+                    focused,
+                    color,
+                    size
+                }: DrawerIconProps) => (
                 <Icon name="location" size={18} color={color} />
                 ),
             }}/>
           <Drawer.Screen name="Profile" component={Profile} 
             options={{
                 title: 'Perfil',
-                drawerIcon: ({focused, color, size}) => (
+                drawerIcon: ({
+                    focused,
+                    color,
+                    size
+                }: DrawerIconProps) => (
                 <Icon name="person" size={18} color={color} />
                 ),
             }}/>
           <Drawer.Screen name="About" component={About} 
             options={{
                 title: 'Quem somos?',
-                drawerIcon: ({focused, color, size}) => (
+                drawerIcon: ({
+                    focused,
+                    color,
+                    size
+                }: DrawerIconProps) => (
                 <Icon name="information-circle" size={18} color={color} />
                 ),
             }}/>

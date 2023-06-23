@@ -37,18 +37,20 @@ GoogleSignin.configure({
 
 import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
 
-const Login = ({navigation}) => {
+const Login = ({navigation}: any) => {
 
     const [hidePassword, setHidePassword] =useState(true);
-    const [message, setMessage] =useState();
-    const [messageType, setMessageType] =useState();
+    const [message, setMessage] =useState<string | undefined | null>();
+    const [messageType, setMessageType] =useState<string | undefined>();
 
-    const handleMessage = (message, type = "FAILED") => {
+    const handleMessage = (message: string | null, type = "FAILED") => {
         setMessage(message);
         setMessageType(type);
     }
     
-    const loginFirebase = (values, {setSubmitting}) => {
+    const loginFirebase = (values: any, {
+        setSubmitting
+    }: any) => {
         handleMessage(null);
         if (values.email == '' || values.password == '') {
             handleMessage("Preencha todos os campos!")
@@ -77,7 +79,7 @@ const Login = ({navigation}) => {
     }
 
 
-    const handleForgotPassword = (email) => {
+    const handleForgotPassword = (email: any) => {
         handleMessage(null);
         console.log(email);
         if (email == '') {
@@ -191,7 +193,14 @@ const Login = ({navigation}) => {
   )
 }
 
-const MyTextInput = ({label, icon,isPassword, hidePassword, setHidePassword, ...props}) => {
+const MyTextInput = ({
+    label,
+    icon,
+    isPassword,
+    hidePassword,
+    setHidePassword,
+    ...props
+}: any) => {
     return (
         <View>
             <LeftIcon>

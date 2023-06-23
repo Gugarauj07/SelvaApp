@@ -1,5 +1,4 @@
-import styled from "styled-components";
-import { View, Text, Image, TextInput, TouchableOpacity } from "react-native";
+import styled from 'styled-components/native';
 import Constants from "expo-constants";
 
 const StatusBarHeight = Constants.statusBarHeight;
@@ -91,7 +90,12 @@ export const RightIcon = styled.TouchableOpacity`
     z-index: 1;
 `;
 
-export const StyledButton = styled.TouchableOpacity`
+interface StyledButtonProps {
+    google?: boolean;
+}
+
+
+export const StyledButton = styled.TouchableOpacity<StyledButtonProps>`
     padding: 15px;
     background-color: ${brand};
     justify-content: center;
@@ -100,26 +104,30 @@ export const StyledButton = styled.TouchableOpacity`
     margin-vertical:5px;
     height:60px;
 
-    ${(props) => props.google == true && `
+    ${(props: any) => props.google == true && `
     background-color: ${yellow};
     flex-direction:row;
     justify-content: center;
     `}
 `;
 
-export const ButtonText = styled.Text`
+export const ButtonText = styled.Text<StyledButtonProps>`
     color: ${primary};
     font-size:16px;
 
-    ${(props) => props.google == true && `
+    ${(props: any) => props.google == true && `
     padding:5px;
     `}
 `;
 
-export const MsgBox = styled.Text`
-    text-align: center;
-    font-size: 13px;
-    color: ${props => props.type == "SUCCESS" ? green : red};
+interface MsgBoxProps {
+    type?: string;
+}
+
+  export const MsgBox = styled.Text<MsgBoxProps>`
+  text-align: center;
+  font-size: 13px;
+  color: ${(props) => props.type === "SUCCESS" ? green : red};
 `;
 
 export const Line = styled.View`

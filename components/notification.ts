@@ -3,6 +3,7 @@ import messaging from '@react-native-firebase/messaging';
 import {PermissionsAndroid,Alert } from 'react-native';
 
 const notification = () => {
+    // @ts-expect-error TS(2345): Argument of type 'Permission | undefined' is not a... Remove this comment to see the full error message
     PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS);
 
     async function requestUserPermission() {
@@ -14,6 +15,7 @@ const notification = () => {
       }
 
       useEffect(() => {
+        // @ts-expect-error TS(2801): This condition will always return true since this ... Remove this comment to see the full error message
         if (requestUserPermission()) {
             messaging().getToken().then(token => {
                 console.log('Token:', token);
