@@ -1,30 +1,8 @@
 import axios from 'axios';
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useState } from 'react'
 
-export default function usePurpleAirAndNASAData(formattedDate: string) {
-    const [purpleAirData, setPurpleAirData] = useState([]);
-    const [nasaData, setNasaData] = useState([]);
   
-    
-      async function fetchData() {
-        try {
-          const purpleAirResponse = await get_purpleair();
-          setPurpleAirData(purpleAirResponse.data);
-  
-          const nasaResponse = await getNASAData(formattedDate);
-          setNasaData(nasaResponse);
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      }
-  
-      fetchData();
-    
-  
-    return { purpleAirData, nasaData };
-  }
-  
-  async function get_purpleair() {
+export async function get_purpleair() {
     const ids = [
       "153914", "164961", "132041", "54999", "83933", "96041", "83849", "99747", 
       "47237", "154455", "154485", "154699", "154443", "154703", "153562", "154451", 
@@ -61,8 +39,7 @@ export default function usePurpleAirAndNASAData(formattedDate: string) {
       return [];
     }
   }
-  
-  async function getNASAData(formattedDate: string) {
+  export async function getNASAData(formattedDate: string) {
     const url = `https://firms.modaps.eosdis.nasa.gov/api/area/csv/371a0d0aef0424e422b707280cda69a4/MODIS_NRT/-74,-26,-32,05/1/${formattedDate}`;
   
     try {

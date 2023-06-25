@@ -1,5 +1,6 @@
 import { Marker } from "react-native-maps"
 import { View, Text } from 'react-native'
+import React, { useState } from 'react'
 
 
 export type AqiBand = {
@@ -25,6 +26,7 @@ export type AqiBand = {
   
 
   const RealSensorMarker: React.FC<Props> = ({sensor}) => {
+   
 
     const latitude: number = parseFloat(sensor[3]!)
     const longitude: number = parseFloat(sensor[4]!)
@@ -50,7 +52,6 @@ export type AqiBand = {
     const brColorStr = `${Math.max(color[0]!-r)}, ${Math.max(color[1]!-r)}, ${Math.max(color[2]!-r)}`;
     const txtColor = (pm25 >= 75) ? '#fff' : '#000';
 
-  
     return (
       <Marker
               key={sensor[0]}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from "./../components/styles"
 
 import MapView, { PROVIDER_GOOGLE, Heatmap, Marker, Geojson } from "react-native-maps"
@@ -7,7 +7,7 @@ import MapView, { PROVIDER_GOOGLE, Heatmap, Marker, Geojson } from "react-native
 // import { db } from '../config/firebase';
 import  {geojs}  from "../assets/amazonia_legal"
 import { View, Dimensions } from 'react-native'
-import usePurpleAirAndNASAData from "../components/GetData"
+import {getNASAData, get_purpleair} from "../components/GetData"
 import RealSensorMarker from "../components/RealSensorMarker"
 
 import moment from 'moment-timezone';
@@ -18,21 +18,36 @@ const LONGITUDE = -60.021731;
 const LATITUDE_DELTA = 50;
 const LONGITUDE_DELTA = LATITUDE_DELTA * (width / height);
 
+const now = moment().tz('America/Manaus');
+const year = now.format('YYYY');
+const month = now.format('MM');
+const day = now.format('DD');
+const formattedDate = `${year}-${month}-${day}`;
 
 
 const Home = () => {
   // const { user } = useContext(UserContext)
   // const [cities, setCities] = useState([]);
+  const [purpleAirData, setPurpleAirData] = useState([]);
+  const [nasaData, setNasaData] = useState([]);
 
-  const now = moment().tz('America/Manaus');
-  const year = now.format('YYYY');
-  const month = now.format('MM');
-  const day = now.format('DD');
-  const formattedDate = `${year}-${month}-${day}`;
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const purpleAirResponse = await get_purpleair();
+        setPurpleAirData(purpleAirResponse.data);
 
-  // useEffect(() => {
-  const { purpleAirData, nasaData } = usePurpleAirAndNASAData(formattedDate);
-  // }, [formattedDate]);
+        const nasaResponse = await getNASAData(formattedDate);
+        setNasaData(nasaResponse);
+
+        console.log("1")
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
+
+    fetchData();
+  }, []);
   
 
   // const unsubscribe = onSnapshot(
@@ -76,8 +91,9 @@ const Home = () => {
             strokeColor="black"
             strokeWidth={2}
           />
-        {Array.isArray(purpleAirData) && purpleAirData.length > 0 && purpleAirData.map(sensor => (
-          <RealSensorMarker sensor={sensor}/>
+
+        {Array.isArray(purpleAirData) && purpleAirData.length > 0 && purpleAirData.map((sensor, index) => (
+          <RealSensorMarker key={index} sensor={sensor}/>
         ))}
 
 
