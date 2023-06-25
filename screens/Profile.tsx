@@ -1,18 +1,12 @@
 import React, {useState, useContext, useEffect} from 'react'
 import Checkbox from 'expo-checkbox';
-import { View, Text, StyleSheet } from 'react-native';
-import { MultipleSelectList, SelectList } from 'react-native-dropdown-select-list'
-import {
-    Colors,
-    StyledInputLabel,
-    StyledButton,
-    ButtonText,
-    StyledContainer,
-    MsgBox
-} from "./../components/styles"
+import { View, Text, TouchableOpacity} from 'react-native';
+import { MultipleSelectList } from 'react-native-dropdown-select-list'
+import styles, {Colors} from "./../components/styles"
 import {cidades} from "./../components/Constants"
 import { UserContext } from '../components/UserProvider'; 
 import {getDocumento, updateDocumento} from "../config/firebase";
+import MsgBox from "./../components/MsgBox"
 
 const {brand, secondary, gray} = Colors;
 
@@ -40,10 +34,10 @@ const Profile = () => {
     
 
   return (
-      <StyledContainer>
-        <MsgBox type={"SUCCESS"}>{message}</MsgBox>
+    <View style={styles.container}>
+          <MsgBox messageType={"SUCCESS"} message={message} />
       <Text>Bem-vindo de volta {data.fullName}!</Text>
-      <StyledInputLabel>Onde quer monitorar?</StyledInputLabel>
+      <Text style={styles.inputLabel}>Onde quer monitorar?</Text>
           <MultipleSelectList 
               setSelected={(val: any) => setSelected(val)} 
               data={cidades} 
@@ -57,38 +51,24 @@ const Profile = () => {
               searchPlaceholder = "Procurar"
           />
 
-      <View style={styles.section}>
+      <View style={styles.section2}>
           <Checkbox 
-          style={styles.checkbox}
+          style={styles.checkbox2}
           color={isChecked ? '#4630EB' : undefined}
           value={isChecked}
           onValueChange={setChecked} />
-          <Text style={styles.paragraph}>Quer receber notificações?</Text>
+          <Text style={styles.paragraph2}>Quer receber notificações?</Text>
       </View>
       
 
-          <StyledButton onPress={() => updateDocumento(user, selected, isChecked)}>
-              <ButtonText>Salvar</ButtonText>
-          </StyledButton>
-          </StyledContainer>
+          <TouchableOpacity
+          style={styles.button}
+          onPress={() => updateDocumento(user, selected, isChecked)}
+        >
+          <Text style={styles.buttonText}>Salvar</Text>
+        </TouchableOpacity>
+          </View>
   );
 }
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      marginHorizontal: 16,
-      marginVertical: 32,
-    },
-    section: {
-      flexDirection: 'row',
-      alignItems: 'center',
-    },
-    paragraph: {
-      fontSize: 15,
-    },
-    checkbox: {
-      margin: 8,
-    },
-  });
 
 export default Profile

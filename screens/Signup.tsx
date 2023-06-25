@@ -1,34 +1,17 @@
 import React, {useState} from 'react'
 import { StatusBar } from 'expo-status-bar'
-import {
-    Colors,
-    StyledContainer,
-    InnerContainer,
-    SubTitle,
-    StyledFormArea,
-    LeftIcon,
-    StyledInputLabel,
-    StyledButton,
-    StyledTextInput,
-    RightIcon,
-    ButtonText,
-    MsgBox,
-    Line,
-    ExtraText,
-    ExtraView,
-    TextLink,
-    TextLinkContent
-} from "./../components/styles"
+import styles, {Colors} from "./../components/styles"
 import {cidades} from "./../components/Constants"
-import { View, ActivityIndicator } from 'react-native'
+import { View, ActivityIndicator, Text, TouchableOpacity, TextInput } from 'react-native'
 import { Octicons, Ionicons } from '@expo/vector-icons'
 import { Formik } from 'formik'
 import { getAuth, createUserWithEmailAndPassword, signOut } from "firebase/auth";
 import { MultipleSelectList } from 'react-native-dropdown-select-list'
-
+import MsgBox from "./../components/MsgBox"
 const {brand, darkLight, primary, yellow, gray, secondary} = Colors;
 import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper'
 import {adicionarDocumento} from "../config/firebase"
+import MyTextInput from '../components/MyTextInput'
 
 const Signup = ({
     navigation
@@ -83,17 +66,17 @@ const Signup = ({
     }
 
   return (
-      <KeyboardAvoidingWrapper><StyledContainer>
-          <StatusBar style="dark"/>
-          <InnerContainer>
-              {/* <PageTitle>App Selva</PageTitle> */}
-              <SubTitle>Registro de Usuário</SubTitle>
+      <KeyboardAvoidingWrapper><View style={styles.container}>
+
+      <StatusBar style="dark"/>
+          <View style={styles.innerContainer}>
+              <Text style={styles.subTitle}>Registro de Usuário</Text>
 
               <Formik
               initialValues={{fullName:"", email: '', citys:"", password: '', confirmPassword: ''}}
               onSubmit={registerFirebase}>
                   {({handleChange, handleBlur, handleSubmit, values, isSubmitting}) => 
-                      (<StyledFormArea>
+                      (<View style={styles.formArea}>
                           <MyTextInput 
                               label="Nome completo"
                               icon="person"
@@ -113,7 +96,7 @@ const Signup = ({
                               value={values.email}
                               keyboardType="email-address"
                           />
-                          <StyledInputLabel>Onde quer monitorar?</StyledInputLabel>
+                            <Text style={styles.inputLabel}>Onde quer monitorar?</Text>
                           <MultipleSelectList 
                               setSelected={(val: any) => setSelected(val)} 
                               data={cidades} 
@@ -153,55 +136,34 @@ const Signup = ({
                               hidePassword={hidePassword}
                               setHidePassword = {setHidePassword}
                           />
-                          <MsgBox type={messageType}>{message}</MsgBox>
-                          {!isSubmitting && <StyledButton onPress={handleSubmit}>
-                              <ButtonText>Registrar</ButtonText>
-                          </StyledButton>}
 
-                          {isSubmitting && <StyledButton disabled={true}>
-                              <ActivityIndicator size="large" color={primary} />
-                          </StyledButton>}
-                          <Line />
+                            <MsgBox messageType={messageType} message={message} />
+
+                        {!isSubmitting && (
+                            <TouchableOpacity onPress={handleSubmit} style={styles.button}>
+                            <Text style={styles.buttonText}>Registrar</Text>
+                            </TouchableOpacity>
+                        )}
+
+                        {isSubmitting && (
+                            <TouchableOpacity disabled={true} style={styles.button}>
+                            <ActivityIndicator size="large" color="#000" />
+                            </TouchableOpacity>
+                        )}
                           
-                          <ExtraView>
-                              <ExtraText>
-                                  Já tem uma conta?
-                              </ExtraText>
-                              <TextLink onPress={() => navigation.navigate("Login")}>
-                                  <TextLinkContent>  Login</TextLinkContent>
-                              </TextLink>
-                          </ExtraView>
-                      </StyledFormArea>)
+                          <View style={styles.extraView}>
+                            <Text style={styles.extraText}>Já tem uma conta?</Text>
+                                <TouchableOpacity onPress={() => navigation.navigate('Login')} style={styles.textLink}>
+                                    <Text style={styles.textLinkContent}> Login</Text>
+                                </TouchableOpacity>
+                            </View>
+                      </View>)
                   }
 
               </Formik>
-          </InnerContainer>
-      </StyledContainer></KeyboardAvoidingWrapper>
+          </View>
+      </View></KeyboardAvoidingWrapper>
   );
-}
-
-const MyTextInput = ({
-    label,
-    icon,
-    isPassword,
-    hidePassword,
-    setHidePassword,
-    ...props
-}: any) => {
-    return (
-        <View>
-            <LeftIcon>
-                <Octicons name={icon} size={30} color={brand}/>
-            </LeftIcon>
-            <StyledInputLabel>{label}</StyledInputLabel>
-            <StyledTextInput {...props}/>
-        {isPassword && (
-            <RightIcon onPress={() => setHidePassword(!hidePassword)}>
-                <Ionicons name={hidePassword ? 'md-eye-off':"md-eye"} size={30} color={darkLight} />
-            </RightIcon>
-        )}
-        </View>
-    )
 }
 
 export default Signup

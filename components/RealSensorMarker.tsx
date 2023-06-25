@@ -19,13 +19,17 @@ export type AqiBand = {
     {'inf': 125, 'sup': 160, 'name': 'Péssimo', 'color': '#980065', 'rgb': [152, 0, 101]},
   ];
   
+  interface Props {
+    sensor: string[]
+  }
   
 
-  const RealSensorMarker = (sensor: any) => {
-    
+  const RealSensorMarker: React.FC<Props> = ({sensor}) => {
+
     const latitude: number = parseFloat(sensor[3]!)
     const longitude: number = parseFloat(sensor[4]!)
     const pm25: number = parseFloat(sensor[5]!)
+    // console.log(sensor)
 
     const color: number[] = [0, 0, 0]
   
@@ -45,6 +49,7 @@ export type AqiBand = {
     const r = 50;
     const brColorStr = `${Math.max(color[0]!-r)}, ${Math.max(color[1]!-r)}, ${Math.max(color[2]!-r)}`;
     const txtColor = (pm25 >= 75) ? '#fff' : '#000';
+
   
     return (
       <Marker
@@ -56,8 +61,8 @@ export type AqiBand = {
                 style={{
                   width: 30,
                   height: 20,
-                  backgroundColor: bgColorStr,
-                  borderColor: brColorStr,
+                  backgroundColor: `rgb(${bgColorStr})`,
+                  borderColor: `rgb(${brColorStr})`,
                   alignItems: 'center',
                   justifyContent: 'center',
                   borderRadius: 5,

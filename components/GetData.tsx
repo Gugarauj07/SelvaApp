@@ -5,7 +5,7 @@ export default function usePurpleAirAndNASAData(formattedDate: string) {
     const [purpleAirData, setPurpleAirData] = useState([]);
     const [nasaData, setNasaData] = useState([]);
   
-    useEffect(() => {
+    
       async function fetchData() {
         try {
           const purpleAirResponse = await get_purpleair();
@@ -19,7 +19,7 @@ export default function usePurpleAirAndNASAData(formattedDate: string) {
       }
   
       fetchData();
-    }, [formattedDate]);
+    
   
     return { purpleAirData, nasaData };
   }
@@ -37,7 +37,7 @@ export default function usePurpleAirAndNASAData(formattedDate: string) {
       "135192", "129323", "147593", "89997", "29277", "41371", "126889", "126707", 
       "114417", "14075", "159649", "96827", "98889", "101816", "129571", "140802", 
       "140798", "102940", "140956", "140310", "140898", "4919", "143910", "89329", 
-      "143908", "99605", "127369", "127399", "127405", "127651", "127403", "127373", 
+      "143908", "99605", "127369", "127399", "127405", "127651", "127403", "127373",
       "127375", "127357", "87243", "86891", "27515", "174333", "128837", "52163", "2209", 
       "86937", "27597", "27552", "2067", "27617", "27647", "99007", "98999", "99099", 
       "99093", "103222", "99091", "99079", "111467", "111461", "111494", "111469", 

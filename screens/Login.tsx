@@ -1,32 +1,14 @@
 import React, {useEffect, useState} from 'react'
 import { StatusBar } from 'expo-status-bar'
 
-import {
-    Colors,
-    StyledContainer,
-    InnerContainer,
-    PageLogo, 
-    SubTitle,
-    StyledFormArea,
-    LeftIcon,
-    StyledInputLabel,
-    StyledButton,
-    StyledTextInput,
-    RightIcon,
-    ButtonText,
-    MsgBox,
-    Line,
-    ExtraText,
-    ExtraView,
-    TextLink,
-    TextLinkContent,
-} from "./../components/styles"
-import { View, ActivityIndicator, TouchableOpacity, Text } from 'react-native'
-import { Octicons, Ionicons, Fontisto } from '@expo/vector-icons'
+import styles, {Colors} from "./../components/styles"
+import MsgBox from "./../components/MsgBox"
+
+import { View, ActivityIndicator, Image, Text, TextInput, TouchableOpacity,  } from 'react-native'
+import { Fontisto } from '@expo/vector-icons'
 import { Formik } from 'formik'
 import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail, GoogleAuthProvider,signInWithCredential } from "firebase/auth";
-
-
+import MyTextInput from '../components/MyTextInput'
 const {brand, darkLight, primary} = Colors;
 /* import { GoogleSignin } from 'react-native-google-signin';
 
@@ -112,18 +94,19 @@ const Login = ({navigation}: any) => {
 //     }
 
   return (
-    <KeyboardAvoidingWrapper><StyledContainer>
+    <KeyboardAvoidingWrapper><View style={styles.container}>
+
         <StatusBar style="dark"/>
-        <InnerContainer>
-            <PageLogo resizeMode="cover" source={require('./../assets/logo.png')} />
-            {/* <PageTitle>App Selva</PageTitle> */}
-            <SubTitle>Login de Usuário</SubTitle>
+            <View style={styles.innerContainer}>
+
+            <Image style={styles.pageLogo} resizeMode="cover" source={require('./../assets/logo.png')}/>
+            <Text style={styles.subTitle}>Login de Usuário</Text>
 
             <Formik
             initialValues={{email: '', password: ''}}
             onSubmit={loginFirebase}>
                 {({handleChange, handleBlur, handleSubmit, values, isSubmitting}) => 
-                    (<StyledFormArea>
+                    (<View style={styles.formArea}>
                         <MyTextInput 
                             label="Endereço de Email"
                             icon="mail"
@@ -148,73 +131,49 @@ const Login = ({navigation}: any) => {
                             setHidePassword = {setHidePassword}
                         />
 
-                        <MsgBox type={messageType}>{message}</MsgBox>
+                        <MsgBox messageType={messageType} message={message} />
 
-                        <ExtraView>
-                            <ExtraText>
-                            Esqueceu sua senha?
-                            </ExtraText>
-                            <TextLink onPress={() => {handleForgotPassword(values.email)}}>
-                                    <TextLinkContent> Clique aqui</TextLinkContent>
-                            </TextLink>
-                        </ExtraView>
+                        <View style={styles.extraView}>
+                            <Text style={styles.extraText}>Esqueceu sua senha?</Text>
+                            <TouchableOpacity onPress={() => handleForgotPassword(values.email)} style={styles.textLink}>
+                                <Text style={styles.textLinkContent}>Clique aqui</Text>
+                            </TouchableOpacity>
+                        </View>
 
-                        {!isSubmitting && <StyledButton onPress={handleSubmit}>
-                            <ButtonText>Login</ButtonText>
-                        </StyledButton>}
+                        {!isSubmitting ? (
+                            <TouchableOpacity onPress={handleSubmit} style={styles.button}>
+                            <Text style={styles.buttonText}>Login</Text>
+                            </TouchableOpacity>
+                        ): null}
 
-                        {isSubmitting && <StyledButton disabled={true}>
-                            <ActivityIndicator size="large" color={primary} />
-                        </StyledButton>}
+                        {isSubmitting ? (
+                            <TouchableOpacity disabled={true} style={styles.button}>
+                            <ActivityIndicator size="large" color="#fff" />
+                            </TouchableOpacity>
+                        ) : null}
                         
-                    </StyledFormArea>)
+                    </View>)
                 }
 
             </Formik>
-            <StyledFormArea>
-                <Line />
-                <StyledButton google={true} /* onPress={handleGoogleSignin} */>
-                    <Fontisto name='google' color={primary} size={25} />
-                    <ButtonText google={true}>Entre com o Google</ButtonText>
-                </StyledButton>
-            
-                <ExtraView>
-                    <ExtraText>
-                        Ainda não tem uma conta?
-                    </ExtraText>
-                    <TextLink onPress={() => navigation.navigate("Signup")}>
-                        <TextLinkContent>  Registre-se</TextLinkContent>
-                    </TextLink>
-                </ExtraView>
-                
-            </StyledFormArea>
-        </InnerContainer>
-    </StyledContainer></KeyboardAvoidingWrapper>
-  )
-}
+            <View style={styles.formArea}>
+                <View style={styles.line} />
 
-const MyTextInput = ({
-    label,
-    icon,
-    isPassword,
-    hidePassword,
-    setHidePassword,
-    ...props
-}: any) => {
-    return (
-        <View>
-            <LeftIcon>
-                <Octicons name={icon} size={30} color={brand}/>
-            </LeftIcon>
-            <StyledInputLabel>{label}</StyledInputLabel>
-            <StyledTextInput {...props}/>
-        {isPassword && (
-            <RightIcon onPress={() => setHidePassword(!hidePassword)}>
-                <Ionicons name={hidePassword ? 'md-eye-off':"md-eye"} size={30} color={darkLight} />
-            </RightIcon>
-        )}
+                <TouchableOpacity style={styles.googleButton}>
+                    <Fontisto name="google" color="#000" size={25} style={styles.googleButtonIcon} />
+                    <Text style={styles.googleButtonText}>Entre com o Google</Text>
+                </TouchableOpacity>
+
+                <View style={styles.extraView}>
+                    <Text style={styles.extraText}>Ainda não tem uma conta?</Text>
+                    <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
+                    <Text style={styles.textLinkContent}> Registre-se</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
         </View>
-    )
+    </View></KeyboardAvoidingWrapper>
+  )
 }
 
 export default Login

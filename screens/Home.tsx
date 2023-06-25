@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react'
-import { Text, StyleSheet } from 'react-native'
+import styles from "./../components/styles"
 
 import MapView, { PROVIDER_GOOGLE, Heatmap, Marker, Geojson } from "react-native-maps"
 
@@ -29,8 +29,11 @@ const Home = () => {
   const month = now.format('MM');
   const day = now.format('DD');
   const formattedDate = `${year}-${month}-${day}`;
-  
+
+  // useEffect(() => {
   const { purpleAirData, nasaData } = usePurpleAirAndNASAData(formattedDate);
+  // }, [formattedDate]);
+  
 
   // const unsubscribe = onSnapshot(
   //   doc(db, "UserInfo", user),
@@ -56,7 +59,7 @@ const Home = () => {
   // });
 
   return (
-    <View style={styles.container}>
+    <View style={styles.mapContainer}>
 
       <MapView
         provider={PROVIDER_GOOGLE}
@@ -94,23 +97,5 @@ const Home = () => {
     </View>
   )
 }
-const styles = StyleSheet.create({
-  container: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    justifyContent: 'flex-end',
-    alignItems: 'center'
-  },
-  map: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0
-  }
-})
 
 export default Home

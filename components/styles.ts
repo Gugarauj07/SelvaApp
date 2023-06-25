@@ -1,4 +1,4 @@
-import styled from 'styled-components/native';
+import { StyleSheet } from 'react-native';
 import Constants from "expo-constants";
 
 const StatusBarHeight = Constants.statusBarHeight;
@@ -18,147 +18,168 @@ export const Colors = {
 
 const { primary, secondary, tertiary, darkLight, brand, yellow, green, red, ligthblue } = Colors;
 
-export const StyledContainer = styled.View`
-    flex: 1;
-    padding: 25px;
-    padding-top: ${StatusBarHeight + 30}px;
-    background-color: ${primary};
-`
-
-export const InnerContainer = styled.View`
-    flex: 1;
-    width: 100%;
-    align-items: center;
-`;
-
-export const PageLogo = styled.Image`
-    width: 250px;
-    height: 210px;
-    padding: 0px;
-`;
-
-export const PageTitle = styled.Text`
-    font-size: 30px;
-    text-align: center;
-    font-weight: bold;
-    color: ${brand};
-    padding: 10px;
-`;
-
-export const SubTitle = styled.Text`
-    font-size: 18px;
-    margin: 11px;
-    letter-spacing: 1px;
-    font-weight: bold;
-    color: ${tertiary};
-`;
-
-export const StyledFormArea = styled.View`
-    width: 90%;
-`;
-
-export const StyledTextInput = styled.TextInput`
-    background-color:${secondary};
-    padding: 15px;
-    padding-left: 55px;
-    padding-right: 55px;
-    border-radius: 5px;
-    font-size: 16px;
-    height: 60px;
-    margin-vertical:3px;
-    margin-bottom:10px;
-    color: ${tertiary};
-`;
-
-export const StyledInputLabel = styled.Text`
-    color: ${tertiary};
-    font-size: 13px;
-    text-align: left;
-`;
-
-export const LeftIcon = styled.View`
-    left: 15px;
-    top: 38px;
-    position: absolute;
-    z-index: 1;
-`;
-
-export const RightIcon = styled.TouchableOpacity`
-    right: 15px;
-    top: 38px;
-    position: absolute;
-    z-index: 1;
-`;
-
-interface StyledButtonProps {
-    google?: boolean;
-}
-
-
-export const StyledButton = styled.TouchableOpacity<StyledButtonProps>`
-    padding: 15px;
-    background-color: ${brand};
-    justify-content: center;
-    align-items: center;
-    border-radius: 5px;
-    margin-vertical:5px;
-    height:60px;
-
-    ${(props: any) => props.google == true && `
-    background-color: ${yellow};
-    flex-direction:row;
-    justify-content: center;
-    `}
-`;
-
-export const ButtonText = styled.Text<StyledButtonProps>`
-    color: ${primary};
-    font-size:16px;
-
-    ${(props: any) => props.google == true && `
-    padding:5px;
-    `}
-`;
-
-interface MsgBoxProps {
-    type?: string;
-}
-
-  export const MsgBox = styled.Text<MsgBoxProps>`
-  text-align: center;
-  font-size: 13px;
-  color: ${(props) => props.type === "SUCCESS" ? green : red};
-`;
-
-export const Line = styled.View`
-    height: 1px;
-    widht: 100%;
-    background-color: ${darkLight};
-    margin-vertical:10px;
-`;
-
-export const ExtraView = styled.View`
-    justify-content: center;
-    flex-direction: row;
-    align-items: center;
-    padding: 4px;
-    padding-bottom: 0px;
-`;
-
-export const ExtraText = styled.Text`
-    justify-content: center;
-    align-content: center;
-    color: ${tertiary};
-    font-size: 15px;
-`;
-
-export const TextLink = styled.TouchableOpacity`
-    justify-content: center;
-    align-items: center;
-`;
-
-export const TextLinkContent = styled.Text`
-    color: ${ligthblue};
-    font-size: 15px;
-`;
-
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      padding: 25,
+      paddingTop: StatusBarHeight + 30,
+      backgroundColor: primary,
+    },
+    innerContainer: {
+      flex: 1,
+      width: '100%',
+      alignItems: 'center',
+    },
+    pageLogo: {
+      width: 250,
+      height: 210,
+      padding: 0,
+    },
+    pageTitle: {
+      fontSize: 30,
+      textAlign: 'center',
+      fontWeight: 'bold',
+      color: brand,
+      padding: 10,
+    },
+    subTitle: {
+      fontSize: 18,
+      margin: 11,
+      letterSpacing: 1,
+      fontWeight: 'bold',
+      color: tertiary,
+    },
+    formArea: {
+      width: '90%',
+    },
+    textInput: {
+      backgroundColor: secondary,
+      padding: 15,
+      paddingLeft: 55,
+      paddingRight: 55,
+      borderRadius: 5,
+      fontSize: 16,
+      height: 60,
+      marginVertical: 3,
+      marginBottom: 10,
+      color: tertiary,
+    },
+    inputLabel: {
+      color: tertiary,
+      fontSize: 13,
+      textAlign: 'left',
+    },
+    leftIcon: {
+      left: 15,
+      top: 38,
+      position: 'absolute',
+      zIndex: 1,
+    },
+    rightIcon: {
+      right: 15,
+      top: 38,
+      position: 'absolute',
+      zIndex: 1,
+    },
+    button: {
+      padding: 15,
+      backgroundColor: brand,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 5,
+      marginVertical: 5,
+      height: 60,
+    },
+    googleButton: {
+      backgroundColor: yellow,
+      padding: 15,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 5,
+      marginVertical: 5,
+      height: 60,
+    },
+    buttonText: {
+      color: primary,
+      fontSize: 16,
+      padding: 5,
+    },
+    googleButtonIcon: {
+        marginRight: 5,
+        color: '#fff',
+      },
+      googleButtonText: {
+        color: '#fff', // Cor do texto desejada
+        fontSize: 16,
+      },
+    msgBox: {
+      textAlign: 'center',
+      fontSize: 13,
+    },
+    successMsg: {
+      color: green,
+    },
+    errorMsg: {
+      color: red,
+    },
+    line: {
+      height: 1,
+      width: '100%',
+      backgroundColor: darkLight,
+      marginVertical: 10,
+    },
+    extraView: {
+      justifyContent: 'center',
+      flexDirection: 'row',
+      alignItems: 'center',
+      padding: 4,
+      paddingBottom: 0,
+    },
+    extraText: {
+      justifyContent: 'center',
+      alignContent: 'center',
+      color: tertiary,
+      fontSize: 15,
+    },
+    textLink: {
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    textLinkContent: {
+      color: ligthblue,
+      fontSize: 15,
+    },
+    container2: {
+        flex: 1,
+        marginHorizontal: 16,
+        marginVertical: 32,
+      },
+      section2: {
+        flexDirection: 'row',
+        alignItems: 'center',
+      },
+      paragraph2: {
+        fontSize: 15,
+      },
+      checkbox2: {
+        margin: 8,
+      },
+      mapContainer: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        justifyContent: 'flex-end',
+        alignItems: 'center'
+      },
+      map: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0
+      }
+  });
+  
+  export default styles;

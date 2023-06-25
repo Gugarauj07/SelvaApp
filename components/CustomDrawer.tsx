@@ -1,8 +1,6 @@
 import React from 'react';
 import {
-  ImageBackground,
   StyleSheet,
-  Image,
   View,
   Dimensions,
   TouchableOpacity,
@@ -16,7 +14,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { getAuth, signOut } from "firebase/auth";
 
 import { Colors } from '../components/styles';
-const {primary, brand} = Colors;
+const {brand} = Colors;
 
 const {width} = Dimensions.get('screen');
 
