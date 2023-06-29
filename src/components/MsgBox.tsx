@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text } from 'react-native';
-import MsgBoxStyles from '../components/styles';
+import MsgBoxStyles from '../styles';
 
 interface MsgBoxProps {
     messageType: string | undefined;

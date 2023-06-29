@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, ActivityIndicator, Image, Text, TextInput, TouchableOpacity,  } from 'react-native'
-import styles, {Colors} from "./styles"
+import styles, {Colors} from "../styles"
 import { Octicons, Ionicons } from '@expo/vector-icons'
 const {brand, darkLight, primary} = Colors;
 

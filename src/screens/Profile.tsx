@@ -2,11 +2,11 @@ import React, {useState, useContext, useEffect} from 'react'
 import Checkbox from 'expo-checkbox';
 import { View, Text, TouchableOpacity} from 'react-native';
 import { MultipleSelectList } from 'react-native-dropdown-select-list'
-import styles, {Colors} from "./../components/styles"
-import {cidades} from "./../components/Constants"
+import styles, {Colors} from "../styles"
+import {cidades} from "../utils/Constants"
 import { UserContext } from '../components/UserProvider'; 
 import {getDocumento, updateDocumento} from "../config/firebase";
-import MsgBox from "./../components/MsgBox"
+import MsgBox from "../components/MsgBox"
 
 const {brand, secondary, gray} = Colors;
 

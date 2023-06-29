@@ -1,13 +1,13 @@
 import React, {useState} from 'react'
 import { StatusBar } from 'expo-status-bar'
-import styles, {Colors} from "./../components/styles"
-import {cidades} from "./../components/Constants"
+import styles, {Colors} from "../styles"
+import {cidades} from "../utils/Constants"
 import { View, ActivityIndicator, Text, TouchableOpacity, TextInput } from 'react-native'
 import { Octicons, Ionicons } from '@expo/vector-icons'
 import { Formik } from 'formik'
 import { getAuth, createUserWithEmailAndPassword, signOut } from "firebase/auth";
 import { MultipleSelectList } from 'react-native-dropdown-select-list'
-import MsgBox from "./../components/MsgBox"
+import MsgBox from "../components/MsgBox"
 const {brand, darkLight, primary, yellow, gray, secondary} = Colors;
 import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper'
 import {adicionarDocumento} from "../config/firebase"

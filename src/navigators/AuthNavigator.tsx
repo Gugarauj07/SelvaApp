@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Login from '../screens/Login';
 import Signup from '../screens/Signup';
 import DrawerNavigator from './DrawerNavigator';
-import { Colors } from '../components/styles';
+import { Colors } from '../styles';
 
 
 const { primary, tertiary } = Colors;

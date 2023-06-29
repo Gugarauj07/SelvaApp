@@ -1,6 +1,6 @@
 import React from 'react'
 import { View,Text, Linking, TouchableOpacity, StyleSheet } from 'react-native'
-import styles from "./../components/styles"
+import styles from "../styles"
 
 const About = () => {
   return (

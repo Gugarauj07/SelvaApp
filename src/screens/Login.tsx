@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import { StatusBar } from 'expo-status-bar'
 
-import styles, {Colors} from "./../components/styles"
-import MsgBox from "./../components/MsgBox"
+import styles, {Colors} from "../styles"
+import MsgBox from "../components/MsgBox"
 
 import { View, ActivityIndicator, Image, Text, TextInput, TouchableOpacity,  } from 'react-native'
 import { Fontisto } from '@expo/vector-icons'

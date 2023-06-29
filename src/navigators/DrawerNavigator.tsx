@@ -2,7 +2,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import Home from '../screens/Home';
 import Profile from '../screens/Profile';
 import About from '../screens/About';
-import { Colors } from '../components/styles';
+import { Colors } from '../styles';
 import CustomDrawer  from '../components/CustomDrawer';
 import Icon from 'react-native-vector-icons/Ionicons';
 

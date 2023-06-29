@@ -13,7 +13,7 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { getAuth, signOut } from "firebase/auth";
 
-import { Colors } from '../components/styles';
+import { Colors } from '../styles';
 const {brand} = Colors;
 
 const {width} = Dimensions.get('screen');

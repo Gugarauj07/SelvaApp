@@ -179,7 +179,20 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         bottom: 0
-      }
+      },
+      overlay: {
+        position: 'absolute',
+        top: 10,
+        right: 10,
+        backgroundColor: 'white',
+        padding: 10,
+        borderRadius: 5,
+        elevation: 3,
+      },
+      checkboxContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+      },
   });
   
   export default styles;
