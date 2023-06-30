@@ -53,7 +53,6 @@ const Signup = ({
                 
                 adicionarDocumento(fullName, citys, userid);
                 handleMessage("Cadastrado com sucesso!", 'SUCCESS');
-                signOut(auth)
                 setSubmitting(false);
             })
             .catch((error) => {

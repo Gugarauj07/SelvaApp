@@ -39,7 +39,6 @@ const Login = ({navigation}: any) => {
             setSubmitting(false);
         } else {
             const auth = getAuth();
-            auth.languageCode = 'pt';
             signInWithEmailAndPassword(auth, values.email, values.password)
             .then((userCredential) => {
                 // Signed in
