@@ -13,10 +13,12 @@ const {brand, secondary, gray} = Colors;
 const Profile = () => {
 
     const {user} = useContext(UserContext)
-    const [message, setMessage] =useState();
 
     const [selected, setSelected] = useState([]);
     const [isChecked, setChecked] = useState(false);
+
+    const [message, setMessage] =useState<string | undefined | null>();
+    const [messageType, setMessageType] =useState<string | undefined>();
 
     type DocumentData = {fullName?: string, citys?: string[]}
     const [data, setData] = useState<DocumentData>({fullName: "", citys: []});
@@ -31,11 +33,21 @@ const Profile = () => {
             console.error(error);
         });
     }, []);
-    
+
+    const handleMessage = (message: string | null, type = "FAILED") => {
+      setMessage(message);
+      setMessageType(type);
+  }
+    const handleSubmit = (user: any, selected: any, isChecked: boolean) => {
+      handleMessage(null);
+      updateDocumento(user, selected, isChecked)
+      setMessage("Atualizado com sucesso");
+      setMessageType("SUCCESS");
+  } 
 
   return (
     <View style={styles.container}>
-          <MsgBox messageType={"SUCCESS"} message={message} />
+          
       <Text>Bem-vindo de volta {data.fullName}!</Text>
       <Text style={styles.inputLabel}>Onde quer monitorar?</Text>
           <MultipleSelectList 
@@ -60,10 +72,10 @@ const Profile = () => {
           <Text style={styles.paragraph2}>Quer receber notificações?</Text>
       </View>
       
-
+      <MsgBox messageType={"SUCCESS"} message={message} />
           <TouchableOpacity
           style={styles.button}
-          onPress={() => updateDocumento(user, selected, isChecked)}
+          onPress={() => handleSubmit(user, selected, isChecked)}
         >
           <Text style={styles.buttonText}>Salvar</Text>
         </TouchableOpacity>
