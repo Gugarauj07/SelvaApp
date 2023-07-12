@@ -19,6 +19,10 @@ export type AqiBand = {
     {'inf': 75, 'sup': 125, 'name': 'Muito Ruim', 'color': '#ff0000', 'rgb': [255, 0, 0]},
     {'inf': 125, 'sup': 160, 'name': 'Péssimo', 'color': '#980065', 'rgb': [152, 0, 101]},
   ];
+
+const maxBandSup = Math.max(...bands.map(e => e['sup']));
+const maxBand = bands.filter(e => e['sup'] == maxBandSup)[0];
+
   
   interface Props {
     sensor: string[]
@@ -38,7 +42,14 @@ export type AqiBand = {
     for (let i = 0; i < bands.length-1; i++) {
       const band1 = bands[i];
       const band2 = bands[i+1];
-      if (pm25 >= band1!.inf && pm25 <= band2!.inf) {
+
+      if (pm25 >= maxBandSup) {
+        color[0] = maxBand!.rgb[0]!;
+        color[1] = maxBand!.rgb[1]!;
+        color[2] = maxBand!.rgb[2]!;
+        break
+      }
+      else if (pm25 >= band1!.inf && pm25 <= band2!.inf) {
         const alpha: number = (pm25 - band1!.inf)/(band2!.inf - band1!.inf);
         color[0] = band2!.rgb[0]!*alpha + band1!.rgb[0]!*(1-alpha);
         color[1] = band2!.rgb[1]!*alpha + band1!.rgb[1]!*(1-alpha);
@@ -60,13 +71,12 @@ export type AqiBand = {
             >
               <View
                 style={{
-                  width: 30,
-                  height: 20,
                   backgroundColor: `rgb(${bgColorStr})`,
                   borderColor: `rgb(${brColorStr})`,
                   alignItems: 'center',
                   justifyContent: 'center',
                   borderRadius: 5,
+                  padding: 3,
                 }}
               >
                 <Text style={{ color: txtColor, fontSize: 10 }}>{pm25}</Text>

@@ -5,12 +5,25 @@ import About from '../screens/About';
 import { Colors } from '../styles';
 import CustomDrawer  from '../components/CustomDrawer';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { useState, useEffect } from 'react';
+import UserProvider from '../components/UserProvider';
+import Login from '../screens/Login';
+import Signup from '../screens/Signup';
 
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 const {primary, brand} = Colors;
 
 const Drawer = createDrawerNavigator();
 
 const  DrawerNavigator = () => {
+    const [user, setUser] = useState<any>(null);
+
+    useEffect(() => {
+        const auth = getAuth();
+        const subscriber = onAuthStateChanged(auth, setUser);
+
+        return subscriber;
+    }, []);
 
     interface DrawerIconProps {
         focused?: boolean;
@@ -20,7 +33,7 @@ const  DrawerNavigator = () => {
   
     return (
         <Drawer.Navigator 
-            drawerContent={props => <CustomDrawer {...props} />}
+            drawerContent={props => <CustomDrawer {...props} user={user} />}
             screenOptions={{
                 headerShown: true,
                 drawerActiveBackgroundColor: brand,
@@ -40,6 +53,7 @@ const  DrawerNavigator = () => {
                 <Icon name="location" size={18} color={color} />
                 ),
             }}/>
+        {user ? (<UserProvider user={user.uid}>
           <Drawer.Screen name="Profile" component={Profile} 
             options={{
                 title: 'Perfil',
@@ -51,6 +65,20 @@ const  DrawerNavigator = () => {
                 <Icon name="person" size={18} color={color} />
                 ),
             }}/>
+            </UserProvider>) : 
+            <Drawer.Screen name="Notify" component={Signup}
+            options={{
+                title: 'Seja Notificado!',
+                drawerIcon: ({
+                    focused,
+                    color,
+                    size
+                }: DrawerIconProps) => (
+                <Icon name="person" size={18} color={color} />
+                ),
+                
+            }}/>
+            }
           <Drawer.Screen name="About" component={About} 
             options={{
                 title: 'Quem somos?',
@@ -62,6 +90,11 @@ const  DrawerNavigator = () => {
                 <Icon name="information-circle" size={18} color={color} />
                 ),
             }}/>
+        <Drawer.Screen name="Login" component={Login}
+        options={{
+            title: '',
+        }}/>
+
         </Drawer.Navigator>
     );
   }

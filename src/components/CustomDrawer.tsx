@@ -19,7 +19,7 @@ const {brand} = Colors;
 const {width} = Dimensions.get('screen');
 
 const CustomDrawer = (props: any) => {
-
+    
   const handleSignOut = () => {
     const auth = getAuth();
     signOut(auth).then(() => {
@@ -36,6 +36,8 @@ const CustomDrawer = (props: any) => {
           <DrawerItemList {...props} />
         </View>
       </DrawerContentScrollView>
+
+      {props.user !== null && 
       <View style={{padding: 20, borderTopWidth: 1, borderTopColor: '#ccc'}}>
         <TouchableOpacity onPress={handleSignOut} style={{paddingVertical: 15}}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -50,6 +52,7 @@ const CustomDrawer = (props: any) => {
           </View>
         </TouchableOpacity>
       </View>
+      }
     </View>
 
   );
